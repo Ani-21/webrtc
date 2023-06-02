@@ -1,0 +1,18 @@
+export const colors = {
+    primaryBlack: '#181B1D',
+    primaryGrayDark: '#1F2224',
+    primaryGray: '#2A2E30',
+    white: '#FFFFFF',
+    white75: 'rgba(255, 255, 255, 0.75)',
+    white50: 'rgba(255, 255, 255, 0.5)',
+    white20: 'rgba(255, 255, 255, 0.25)',
+    primaryBlueMore: '#285DDF',
+    primaryBlue: '#2C68FA',
+    primaryBlueLess: '#487CFD', 
+    primaryBlue25: 'rgba(44, 104, 250, 0.25)',
+    secondaryRedMore: '#C13C3C',
+    secondaryRed: '#FF4E4E',
+    secondaryRedLess:  '#F46F6F',
+    secondaryRed25: 'rgba(241, 75, 75, 0.25)',
+    secondaryPurple: '#9180FF',
+}
