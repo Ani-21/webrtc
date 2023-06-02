@@ -1,25 +1,31 @@
-import {useState, useEffect } from 'react'
-import { io } from 'socket.io-client';
+import {useState, useEffect } from 'react';
+import { useSocket } from './hooks/useSocket';
 
-const socket = io('http://localhost:3000');
+const params = {
+  url: 'http://localhost:3000'
+}
 
 export const  App = () => {
-  const [isConnected, setIsConnected] = useState(socket.connected)
+  const [name, setName] = useState('')
+  const { connect, disconnect ,subscribe } = useSocket(params);
+
+  const joinRoom = async () => {
+    subscribe('login', name)
+  }
 
   useEffect(() => {
-      socket.on('connection', () => {
-        setIsConnected(true)
-      })
+    connect();
 
-      return () => {
-        socket.off('connection')
-      }
-  }, [])
+    return () => disconnect()
+  }, []);
 
   return (
-    <h1>
-      Hello world
-      <p>{isConnected}</p>
-    </h1>
+    <>
+      <h1>
+        Enter your name
+      </h1>
+      <input type='text' placeholder='name' onChange={(e) =>setName(e.target.value)}/>
+      <button onClick={joinRoom}>Join room</button>
+    </>
   )
 }

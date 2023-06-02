@@ -1,8 +1,8 @@
 import { Router } from '../services/socket/router';
-import { helloRouter } from './root/hello/router';
+import { userRouter } from './root/user/router';
 
 const router = new Router();
 
-router.addRouter('hello', helloRouter);
+router.addRouter('user', userRouter);
 
 export const rootRouter = router;
