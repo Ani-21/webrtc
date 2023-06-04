@@ -1,17 +1,14 @@
-import { CustomButton } from "../custom/Button";
-import { CustomInput } from "../custom/Input";
-import { CustomPaper } from "../custom/Paper";
-import styles from "./Login.module.scss";
+import { CustomButton, CustomInput, CustomPaper } from "@/components/custom";
+import { LoginFull } from "./LoginFull";
+import { useLoginContext } from "@/contexts/loginContext";
 
-import cat_1 from "../../assets/cat_1.svg";
-import {
-  LoginContextProvider,
-  useLoginContext,
-} from "../../contexts/loginContext";
+import styles from "./Login.module.scss";
+import cat_1 from "@/assets/cat_1.svg";
 
 export const Login = () => {
-  const { name, handleChange, joinRoom } = useLoginContext();
-  console.log(name);
+  const { name, isFull, handleChange, joinRoom } = useLoginContext();
+
+  if (isFull) return <LoginFull />;
 
   return (
     <CustomPaper className={styles.container}>
@@ -23,6 +20,7 @@ export const Login = () => {
           type="text"
           placeholder="Name"
           disableUnderline
+          autoComplete="off"
           value={name}
           name="name"
           onChange={handleChange}

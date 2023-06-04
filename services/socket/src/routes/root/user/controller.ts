@@ -1,7 +1,18 @@
-import { IRouteFn } from '../../../../types/socket';
-import { login as loginService } from '../../../services/user/login'
+import { IRouteFn } from "../../../../types/socket";
+import { Socket } from "socket.io";
+import { io } from "../../../config/socket";
+import { UserEvents } from "../../../const/user/events";
 
-export const login: IRouteFn = async (req, res) => {
-    const result = await loginService({name: res.name});
-    return result;
+interface IUser {
+    id: string;
+    name: string;
 }
+const users: IUser[] = [];
+
+export const login: IRouteFn = async (socket: Socket, name: string) => {
+    if (users.length === 4) {
+        io.emit(UserEvents.full, true);
+    } else {
+        users.push({ id: socket.id, name });
+    }
+};

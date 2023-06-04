@@ -1,6 +1,6 @@
 import React, { ReactElement, useContext } from "react";
 import { useSocket } from "../hooks/useSocket";
-import { publicConfig } from "config/publicConfig";
+import { publicConfig } from "../config/publicConfig";
 
 const DEFAULT_SOCKET_STATE = {};
 

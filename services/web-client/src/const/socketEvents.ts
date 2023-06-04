@@ -1,1 +1,4 @@
-export const event = {};
+export enum Event {
+  login = "user:login",
+  isFull = "full",
+}
