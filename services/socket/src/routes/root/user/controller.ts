@@ -19,8 +19,9 @@ export const login: IRouteFn = async (socket: Socket, name: string) => {
             users.push({ id: socket.id, name });
             io.emit(UserEvents.validateUsername, true);
             logger.info(`User ${name} joined: users in room: ${users.length}`);
+        } else {
+            io.emit(UserEvents.validateUsername, false);
+            logger.info("INVALID NAME");
         }
-        io.emit(UserEvents.validateUsername, false);
-        logger.info("INVALID NAME");
     }
 };

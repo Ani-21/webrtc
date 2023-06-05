@@ -16,8 +16,9 @@ export const Login = () => {
       <form className={styles.content}>
         <img src={cat_1} />
         <h1 className={styles.title}>Enter your name</h1>
+        <div className={styles.inputContainer}>
         <CustomInput
-          className={styles.input}
+          className={!isValidName ? styles.inputWarning : styles.input }
           type="text"
           placeholder="Name"
           disableUnderline
@@ -27,10 +28,11 @@ export const Login = () => {
           onChange={handleChange}
         />
         {!isValidName ? (
-          <span className={styles.warning}>* Please enter your name</span>
+          <span>* Please enter your name</span>
         ) : (
           ""
         )}
+         </div>
         <CustomButton
           className={styles.button}
           onClick={joinRoom}

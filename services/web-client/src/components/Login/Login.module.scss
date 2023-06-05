@@ -32,14 +32,22 @@
   font-stretch: 130;
 }
 
-.input {
+.inputContainer {
   width: 100%;
+  .input {
+    width: 100%;
+  }
+  .inputWarning {
+    width: 100%;
+    border: 1px solid #ff4e4e;
+  }
+  span {
+    display: inline-block;
+    color: #ff4e4e;
+  }
 }
+
 
 .button {
   width: 100%;
-}
-
-.warning {
-  color: "#FF4E4E";
 }
