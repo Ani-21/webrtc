@@ -1,7 +1,7 @@
 import { I18nextProvider, initReactI18next } from "react-i18next";
 import i18n from "i18next";
 
-import {en} from "@/locales/en";
+import { en } from "@/locales/en";
 
 export const I18NextProvider = ({
   children,
@@ -21,5 +21,5 @@ export const I18NextProvider = ({
     },
   });
 
-  return <I18NextProvider i18n={i18nextInstance}>{children}</I18nextProvider>;
+  return <I18nextProvider i18n={i18nextInstance}>{children}</I18nextProvider>;
 };

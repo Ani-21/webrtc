@@ -5,7 +5,6 @@ import { LoginFull } from "./LoginFull";
 import { useLoginContext } from "@/contexts/loginContext";
 import { FirstCatIcon } from "@/components/icons/FirstCat";
 import styles from "./Login.module.scss";
-import { en } from "@/locales/en";
 import { CustomInputTypes } from "@/const/customInputTypes";
 
 export const Login = () => {
@@ -30,26 +29,26 @@ export const Login = () => {
     <CustomPaper className={styles.container}>
       <form className={styles.content}>
         <FirstCatIcon />
-        <h1 className={styles.title}>{t("loginPage.input")}</h1>
+        <h1 className={styles.title}>{t("input")}</h1>
         <div className={styles.inputContainer}>
           <CustomInput
             className={warningStyle}
             type={CustomInputTypes.text}
-            placeholder='Name'
+            placeholder="Name"
             disableUnderline
-            autoComplete='off'
+            autoComplete="off"
             value={name}
-            name='name'
+            name="name"
             onChange={handleChange}
           />
-          {!isValidName && <span>* {t("loginPage.repeat")}</span>}
+          {!isValidName && <span>* {t("repeat")}</span>}
         </div>
         <CustomButton
           className={styles.button}
           onClick={() => joinRoom(name)}
-          variant='contained'
+          variant="contained"
         >
-          {t("loginPage.joinRoom")}
+          {t("joinRoom")}
         </CustomButton>
       </form>
     </CustomPaper>

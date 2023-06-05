@@ -1,9 +1,8 @@
 import { CustomPaper } from "../custom/Paper";
 import { CustomButton } from "../custom/Button";
 import { ForthCatIcon } from "../icons/ForthCat";
-import styles from "./Login.module.scss";
 import { useTranslation } from "react-i18next";
-import { TranslationNamespaces } from "@/const/translationNamespaces";
+import styles from "./Login.module.scss";
 
 export const LoginFull = () => {
   const { t } = useTranslation();
@@ -12,9 +11,9 @@ export const LoginFull = () => {
     <CustomPaper className={styles.container}>
       <form className={styles.content}>
         <ForthCatIcon />
-        <h1 className={styles.title}>{t(TranslationNamespaces.roomIsFull)}</h1>
-        <CustomButton className={styles.button} variant='contained'>
-          {t(TranslationNamespaces.back)}
+        <h1 className={styles.title}>{t("roomIsFull")}</h1>
+        <CustomButton className={styles.button} variant="contained">
+          {t("back")}
         </CustomButton>
       </form>
     </CustomPaper>

@@ -35,7 +35,6 @@ const LoginContextProvider = ({ children }: { children: ReactElement }) => {
 
   useEffect(() => {
     subscribe(SocketEvent.userValidateEnter, (data: IData) => {
-      console.log(data.error);
       if (data.error === SocketError.userInvalidNameError) {
         setIsValidName(false);
       } else if (data.error === SocketError.userFullRoomError) {

@@ -1,7 +1,9 @@
-export const loginPage = {
-  joinRoom: "joinRoom",
-  roomIsFull: "roomIsFull",
-  back: "back",
-  input: "input",
-  repeat: "repeat",
+export const en = {
+  translation: {
+    joinRoom: "Join the room",
+    roomIsFull: "Room is full",
+    back: "Back",
+    input: "Enter your name",
+    repeat: "Please, enter your name",
+  },
 };
