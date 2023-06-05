@@ -1,6 +1,6 @@
-import { Socket } from 'socket.io';
-import { ICbFn, IRouteFn } from '../../../types/socket';
-import { emptyFunction } from '../../utils/function/emptyFunction';
+import { Socket } from "socket.io";
+import { ICbFn, IRouteFn } from "../../../types/socket";
+import { emptyFunction } from "../../utils/function/emptyFunction";
 
 export class Router {
     private routes: {
@@ -20,15 +20,18 @@ export class Router {
         this.routers = [];
     }
 
-    addRoute({
-        path,
-        log = false,
-        disconnectOnError = false,
-    }: {
-        path: string;
-        log?: boolean;
-        disconnectOnError?: boolean;
-    }, ...fns: IRouteFn[]) {
+    addRoute(
+        {
+            path,
+            log = false,
+            disconnectOnError = false,
+        }: {
+            path: string;
+            log?: boolean;
+            disconnectOnError?: boolean;
+        },
+        ...fns: IRouteFn[]
+    ) {
         this.routes.push({
             path,
             log,

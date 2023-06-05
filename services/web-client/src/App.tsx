@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { Room } from "./components/Room/Room";
-import { LoginContextProvider } from "./contexts/loginContext";
 import { useSocketContext } from "./contexts/socketContext";
 
 export const App = () => {
@@ -11,8 +10,6 @@ export const App = () => {
   }, []);
 
   return (
-    <LoginContextProvider>
       <Room />
-    </LoginContextProvider>
   );
 };

@@ -1,5 +1,9 @@
 export enum Event {
-  login = "user:login",
-  isFull = "isFull",
-  validateUsername = "validateUsername",
+  userLogin = "user:login",
+  userValidateEnter = "user:validateEnter",
+}
+
+export enum Error {
+  userFullRoomError = "fullRoomError",
+  userInvalidNameError = "invalidNameError",
 }

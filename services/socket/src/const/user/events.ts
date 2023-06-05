@@ -1,4 +1,3 @@
-export enum UserEvents {
-    isFull = "isFull",
-    validateUsername = "validateUsername",
+export enum Event {
+    validateEnter = "user:validateEnter",
 }

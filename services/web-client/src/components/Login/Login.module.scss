@@ -1,3 +1,5 @@
+@import '../../styles/global.scss';
+
 .container {
   display: flex;
   flex-direction: column;
@@ -23,8 +25,7 @@
 }
 
 .title {
-  color: #ffffff;
-  font-family: "Roboto Flex";
+  color: $primary-white;
   font-style: normal;
   font-weight: 800;
   font-size: 22px;
@@ -39,11 +40,11 @@
   }
   .inputWarning {
     width: 100%;
-    border: 1px solid #ff4e4e;
+    border: 1px solid $secondary-red;
   }
   span {
     display: inline-block;
-    color: #ff4e4e;
+    color: $secondary-red;
   }
 }
 
