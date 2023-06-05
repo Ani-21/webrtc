@@ -4,15 +4,21 @@ import {
   useState,
   ReactElement,
   useEffect,
+  useCallback,
 } from "react";
 import { useSocketContext } from "./socketContext";
-import { Event, Error } from "../const/socketEvents";
+import { SocketEvent, SocketError } from "../const/socketEvents";
 
 interface ILoginContext {
   isValidName: boolean;
   isFull: boolean;
   isLoggedIn: boolean;
   joinRoom: (name: string) => void;
+}
+
+interface IData {
+  name: string;
+  error: string;
 }
 
 const LoginContext = createContext({} as ILoginContext);
@@ -23,23 +29,24 @@ const LoginContextProvider = ({ children }: { children: ReactElement }) => {
   const [isFull, setIsFull] = useState(false);
   const { emit, subscribe, unsubscribe } = useSocketContext();
 
-  const joinRoom = (name: string) => {
-    emit(Event.userLogin, { name });
-  };
+  const joinRoom = useCallback((name: string) => {
+    emit(SocketEvent.userLogin, { name });
+  }, []);
 
   useEffect(() => {
-    subscribe(Event.userValidateEnter, (msg: string) => {
-      if (msg === Error.userInvalidNameError) {
+    subscribe(SocketEvent.userValidateEnter, (data: IData) => {
+      console.log(data.error);
+      if (data.error === SocketError.userInvalidNameError) {
         setIsValidName(false);
-      } else if (msg === Error.userFullRoomError) {
+      } else if (data.error === SocketError.userFullRoomError) {
         setIsFull(true);
       } else {
         setIsLoggedIn(true);
       }
     });
 
-    return () => unsubscribe(Event.userValidateEnter);
-  }, [subscribe]);
+    return () => unsubscribe(SocketEvent.userValidateEnter);
+  }, [subscribe, unsubscribe]);
 
   return (
     <LoginContext.Provider

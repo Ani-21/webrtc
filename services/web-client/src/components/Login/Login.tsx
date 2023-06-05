@@ -1,11 +1,11 @@
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CustomButton, CustomInput, CustomPaper } from "@/components/custom";
 import { LoginFull } from "./LoginFull";
 import { useLoginContext } from "@/contexts/loginContext";
-import { Cat1Icon } from "@/components/icons/Cat1";
+import { FirstCatIcon } from "@/components/icons/FirstCat";
 import styles from "./Login.module.scss";
-import { TranslationNamespaces } from "@/const/translationNamespaces";
+import { en } from "@/locales/en";
 import { CustomInputTypes } from "@/const/customInputTypes";
 
 export const Login = () => {
@@ -14,9 +14,9 @@ export const Login = () => {
 
   const { isValidName, isFull, joinRoom } = useLoginContext();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
-  };
+  }, []);
 
   const warningStyle = useMemo(() => {
     return !isValidName ? styles.inputWarning : styles.input;
@@ -29,8 +29,8 @@ export const Login = () => {
   return (
     <CustomPaper className={styles.container}>
       <form className={styles.content}>
-        <Cat1Icon />
-        <h1 className={styles.title}>Enter your name</h1>
+        <FirstCatIcon />
+        <h1 className={styles.title}>{t("loginPage.input")}</h1>
         <div className={styles.inputContainer}>
           <CustomInput
             className={warningStyle}
@@ -42,14 +42,14 @@ export const Login = () => {
             name='name'
             onChange={handleChange}
           />
-          {!isValidName && <span>* Please enter your name</span>}
+          {!isValidName && <span>* {t("loginPage.repeat")}</span>}
         </div>
         <CustomButton
           className={styles.button}
           onClick={() => joinRoom(name)}
           variant='contained'
         >
-          {t(TranslationNamespaces.joinRoom)}
+          {t("loginPage.joinRoom")}
         </CustomButton>
       </form>
     </CustomPaper>

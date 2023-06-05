@@ -1,3 +1,3 @@
-export enum Event {
+export enum SocketEvents {
     validateEnter = "user:validateEnter",
 }

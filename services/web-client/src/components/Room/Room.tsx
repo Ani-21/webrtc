@@ -5,5 +5,9 @@ import { VideoContainer } from "../VideoContainer/VideoContainer";
 export const Room = () => {
   const { isLoggedIn } = useLoginContext();
 
-  return isLoggedIn ? <VideoContainer /> : <Login />;
+  if (isLoggedIn) {
+    return <VideoContainer />;
+  } else {
+    return <Login />;
+  }
 };

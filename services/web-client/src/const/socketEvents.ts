@@ -1,9 +1,9 @@
-export enum Event {
+export enum SocketEvent {
   userLogin = "user:login",
   userValidateEnter = "user:validateEnter",
 }
 
-export enum Error {
+export enum SocketError {
   userFullRoomError = "fullRoomError",
   userInvalidNameError = "invalidNameError",
 }

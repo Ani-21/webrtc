@@ -3,30 +3,26 @@ interface IUser {
     name: string;
 }
 
-let instance:any = null;
-const messages: string[] = []
-const users: IUser[] = []
-
 class State {
+    private users: IUser[];
+    private messages: string[];
     constructor() {
-        if(instance) {
-            throw new Error('State already exits')
-        }
-        instance = this
+        this.users = [];
+        this.messages = [];
     }
-    
+
     getUsers() {
-        return users
+        return this.users;
     }
 
     addNewUser(user: IUser) {
-        users.push(user)
+        this.users.push(user);
     }
 
     getMessages() {
-        return messages
+        return this.messages;
     }
 }
 
-const singletonState = Object.freeze(new State());
-export default singletonState
+const state = new State();
+export const AppState = state;
