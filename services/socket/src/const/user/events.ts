@@ -1,3 +1,4 @@
 export enum UserEvents {
-    full = "full",
+    isFull = "isFull",
+    validateUsername = "validateUsername",
 }

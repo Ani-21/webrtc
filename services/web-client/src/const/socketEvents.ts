@@ -1,4 +1,5 @@
 export enum Event {
   login = "user:login",
-  isFull = "full",
+  isFull = "isFull",
+  validateUsername = "validateUsername",
 }

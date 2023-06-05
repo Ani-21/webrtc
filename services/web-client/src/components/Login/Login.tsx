@@ -6,7 +6,8 @@ import styles from "./Login.module.scss";
 import cat_1 from "@/assets/cat_1.svg";
 
 export const Login = () => {
-  const { name, isFull, handleChange, joinRoom } = useLoginContext();
+  const { name, isValidName, isFull, handleChange, joinRoom } =
+    useLoginContext();
 
   if (isFull) return <LoginFull />;
 
@@ -25,6 +26,11 @@ export const Login = () => {
           name="name"
           onChange={handleChange}
         />
+        {!isValidName ? (
+          <span className={styles.warning}>* Please enter your name</span>
+        ) : (
+          ""
+        )}
         <CustomButton
           className={styles.button}
           onClick={joinRoom}

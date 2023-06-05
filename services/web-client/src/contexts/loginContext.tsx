@@ -10,6 +10,7 @@ import { Event } from "../const/socketEvents";
 
 interface ILoginContext {
   name: string;
+  isValidName: boolean;
   isFull: boolean;
   isLoggedIn: boolean;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -20,6 +21,7 @@ const LoginContext = createContext({} as ILoginContext);
 
 const LoginContextProvider = ({ children }: { children: ReactElement }) => {
   const [name, setName] = useState("");
+  const [isValidName, setIsValidName] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isFull, setIsFull] = useState(false);
   const { emit, subscribe } = useSocketContext();
@@ -30,17 +32,20 @@ const LoginContextProvider = ({ children }: { children: ReactElement }) => {
 
   const joinRoom = () => {
     emit(Event.login, name);
-    setIsLoggedIn(true);
+    subscribe(Event.validateUsername, (msg: boolean) => {
+      setIsLoggedIn(msg);
+      setIsValidName(msg);
+    });
   };
 
   useEffect(() => {
     subscribe(Event.isFull, (msg: boolean) => setIsFull(msg));
   }, []);
-
   return (
     <LoginContext.Provider
       value={{
         name,
+        isValidName,
         isFull,
         isLoggedIn,
         handleChange,
