@@ -1,4 +1,4 @@
-version: "3.8"
+version: '3.3'
 
 services:
   web-client:
@@ -12,7 +12,7 @@ services:
       - NODE_ENV=production
       - VITE_BACKEND_URL=https://kurentochat-ak.staging.forasoft.com/socket.io/
     ports:
-      - "3101:3001"
+      - '3101:3001'
 
   socket:
     build:
@@ -22,4 +22,4 @@ services:
       dockerfile: Dockerfile
     restart: always
     ports:
-      - "3100:3000"
+      - '3100:3000'
