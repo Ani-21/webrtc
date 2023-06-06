@@ -9,6 +9,6 @@ update:
   script:
     - cd deploy/staging
     - docker login -u gitlab-ci-token -p ${CI_JOB_TOKEN} ${CI_REGISTRY}
-    - docker-compose --compatibility -p %НАЗВАНИЕ_ПРОЕКТА% -f docker-compose.yml up -d --force-recreate --build
+    - docker-compose --compatibility -p LK_Ani_Kvikvinia -f docker-compose.yml up -d --force-recreate --build
   only:
-    - master
+    - dev
