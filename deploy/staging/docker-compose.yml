@@ -3,18 +3,23 @@ version: "3.8"
 services:
   web-client:
     build:
-      context: ../../services
-      dockerfile: web-client/Dockerfile
+      context: ../../services/web-client
+      dockerfile: Dockerfile
     restart: always
+    depends_on:
+      - socket
+    environment:
+      - NODE_ENV=production
+      - VITE_BACKEND_URL=https://kurentochat-ak.staging.forasoft.com/socket.io/
     ports:
-      - "%host-port%:%process-port%"
+      - "3101:3001"
 
   socket:
     build:
-      context: ../../services
-      dockerfile: socket/Dockerfile
+      context: ../../services/socket
+      environment:
+        - ALLOWED_ORIGIN=https://kurentochat-ak.staging.forasoft.com
+      dockerfile: Dockerfile
     restart: always
-    volumes:
-      - "../../services/socket:/app"
     ports:
-      - "%host-port%:%process-port%"
+      - "3100:3000"

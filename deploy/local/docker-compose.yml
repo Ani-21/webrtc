@@ -3,26 +3,16 @@ version: "3.8"
 services:
   web-client:
     build:
-      context: ../../services
-      dockerfile: web-client/Dockerfile.dev
+      context: ../../services/web-client
+      dockerfile: Dockerfile.dev
     restart: always
-    volumes:
-      - "../../services/web-client:/app"
     ports:
       - "3001:3001"
 
   socket:
     build:
-      context: ../../services
-      dockerfile: socket/Dockerfile.dev
+      context: ../../services/socket
+      dockerfile: Dockerfile.dev
     restart: always
-    volumes:
-      - "../../services/socket:/app"
     ports:
       - "3000:3000"
-
-  livekit:
-    build:
-      context: ../../services
-      dockerfile: livekit/Dockerfile
-    network_mode: host

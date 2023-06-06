@@ -1,6 +1,6 @@
 import { Input, styled } from "@mui/material";
 
-export const CustomInput = styled(Input)((props) => ({
+export const CustomInput = styled(Input)(() => ({
   backgroundColor: "#2A2E30",
   borderRadius: "11px",
   height: "52px",

@@ -1,13 +1,13 @@
 import { Server } from "socket.io";
-
 import { auth } from "../services/socket/auth";
 import { onConnection } from "../services/socket/onConnection";
+import { vars } from "./vars";
 
 const socketConfig = {
     pingInterval: 10000,
     pingTimeout: 10000,
     cors: {
-        origin: "http://localhost:3001",
+        origin: vars.origin,
     },
 };
 

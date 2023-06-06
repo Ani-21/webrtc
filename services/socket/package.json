@@ -6,7 +6,7 @@
   },
   "main": "src/index.ts",
   "scripts": {
-    "start": "node dist/index.js",
+    "start": "node dist/src/index.js",
     "build": "tsc --project tsconfig.server.json",
     "dev": "nodemon src/index.ts",
     "lint": "eslint ./src/",
@@ -16,9 +16,9 @@
   "dependencies": {
     "axios": "0.21.4",
     "dotenv": "10.0.0",
-    "joi": "^17.4.2",
+    "joi": "17.4.2",
     "morgan": "1.10.0",
-    "socket.io": "^4.6.1",
+    "socket.io": "4.6.1",
     "uuid": "8.3.2",
     "winston": "3.3.3"
   },
