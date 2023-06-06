@@ -1,3 +1,3 @@
 export const publicConfig = {
-  socketUrl: "http://localhost:3000",
+  socketUrl: import.meta.env.VITE_BACKEND_URL,
 };

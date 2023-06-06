@@ -27,7 +27,6 @@ export const loginService = async (socket: Socket, res: ValidData) => {
         data.error = SocketError.fullRoomError;
         io.to(socket.id).emit(SocketEvent.validateEnter, data);
     } else {
-        console.log(name.length);
         if (name.length) {
             data.name = name;
             AppState.addNewUser({ id: socket.id, name });
