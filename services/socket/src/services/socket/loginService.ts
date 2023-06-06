@@ -1,7 +1,7 @@
 import { Socket } from "socket.io";
 import { io } from "../../config/socket";
-import { SocketEvents } from "../../const/user/events";
-import { Errors, MAX_LENGTH } from "../../const/user/constants";
+import { SocketEvent, SocketError } from "../../const/user/socketEvents";
+import { MAX_LENGTH } from "../../const/user/constants";
 import { AppState } from "../../state";
 
 interface IData {
@@ -9,26 +9,32 @@ interface IData {
     error: string;
 }
 
-export const loginService = async (socket: Socket, name: string) => {
+interface ValidData {
+    name: string;
+}
+
+export const loginService = async (socket: Socket, res: ValidData) => {
+    const { name } = res;
+
     const data: IData = {
-        name: "",
+        name,
         error: "",
     };
 
     const usersInRoom = AppState.getUsers().length;
 
     if (usersInRoom === MAX_LENGTH) {
-        data.error = Errors.fullRoomError;
-        io.to(socket.id).emit(SocketEvents.validateEnter, data);
+        data.error = SocketError.fullRoomError;
+        io.to(socket.id).emit(SocketEvent.validateEnter, data);
     } else {
-        if (!name.length) {
+        console.log(name.length);
+        if (name.length) {
             data.name = name;
             AppState.addNewUser({ id: socket.id, name });
-            io.to(socket.id).emit(SocketEvents.validateEnter, data);
+            io.to(socket.id).emit(SocketEvent.validateEnter, data);
         } else {
-            data.error = Errors.invalidNameError;
-            io.to(socket.id).emit(SocketEvents.validateEnter, data);
-            console.log("INVALID NAME");
+            data.error = SocketError.invalidNameError;
+            io.to(socket.id).emit(SocketEvent.validateEnter, data);
         }
     }
 };

@@ -1,6 +1,6 @@
 import { CustomPaper } from "../custom/Paper";
 import { CustomButton } from "../custom/Button";
-import { ForthCatIcon } from "../icons/ForthCat";
+import { FourthCatIcon } from "../icons/FourthCat";
 import { useTranslation } from "react-i18next";
 import styles from "./Login.module.scss";
 
@@ -10,9 +10,9 @@ export const LoginFull = () => {
   return (
     <CustomPaper className={styles.container}>
       <form className={styles.content}>
-        <ForthCatIcon />
+        <FourthCatIcon />
         <h1 className={styles.title}>{t("roomIsFull")}</h1>
-        <CustomButton className={styles.button} variant="contained">
+        <CustomButton className={styles.button} variant='contained'>
           {t("back")}
         </CustomButton>
       </form>

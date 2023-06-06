@@ -6,6 +6,7 @@ interface IUser {
 class State {
     private users: IUser[];
     private messages: string[];
+
     constructor() {
         this.users = [];
         this.messages = [];

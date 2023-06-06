@@ -5,7 +5,5 @@ export const schemeValidator =
     (scheme: Schema) => async (socket: Socket, data: any) => {
         const result = scheme.validate(data);
 
-        if (result.error) {
-            throw result.error;
-        }
+        return result.value;
     };

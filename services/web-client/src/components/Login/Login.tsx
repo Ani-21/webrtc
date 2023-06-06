@@ -1,11 +1,11 @@
 import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CustomButton, CustomInput, CustomPaper } from "@/components/custom";
-import { LoginFull } from "./LoginFull";
 import { useLoginContext } from "@/contexts/loginContext";
 import { FirstCatIcon } from "@/components/icons/FirstCat";
-import styles from "./Login.module.scss";
 import { CustomInputTypes } from "@/const/customInputTypes";
+import { LoginFull } from "./LoginFull";
+import styles from "./Login.module.scss";
 
 export const Login = () => {
   const [name, setName] = useState("");
@@ -34,11 +34,11 @@ export const Login = () => {
           <CustomInput
             className={warningStyle}
             type={CustomInputTypes.text}
-            placeholder="Name"
+            placeholder='Name'
             disableUnderline
-            autoComplete="off"
+            autoComplete='off'
             value={name}
-            name="name"
+            name='name'
             onChange={handleChange}
           />
           {!isValidName && <span>* {t("repeat")}</span>}
@@ -46,7 +46,7 @@ export const Login = () => {
         <CustomButton
           className={styles.button}
           onClick={() => joinRoom(name)}
-          variant="contained"
+          variant='contained'
         >
           {t("joinRoom")}
         </CustomButton>
