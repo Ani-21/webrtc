@@ -3,18 +3,18 @@ version: "3.8"
 services:
   web-client:
     build:
-      context: ../../services
-      dockerfile: web-client/Dockerfile
+      context: ../../services/web-client
+      dockerfile: Dockerfile
     restart: always
     ports:
-      - "%host-port%:%process-port%"
+      - "3101:3001"
 
   socket:
     build:
-      context: ../../services
-      dockerfile: socket/Dockerfile
+      context: ../../services/socket
+      dockerfile: Dockerfile
     restart: always
     volumes:
       - "../../services/socket:/app"
     ports:
-      - "%host-port%:%process-port%"
+      - "3100:3000"

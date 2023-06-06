@@ -4,11 +4,12 @@ RUN apk update
 RUN apk upgrade
 RUN apk add --no-cache git
 
+RUN mkdir /app
 WORKDIR /app
-ADD package.json package-lock.json ./
+COPY package.json /app
+COPY package-lock.json /app
 RUN npm ci
-ADD . /app
-
+COPY . /app
 RUN npm run build
 
-ENTRYPOINT ["npm", "start"]
+ENTRYPOINT ["npm", "run", "start"]

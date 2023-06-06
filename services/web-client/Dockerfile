@@ -1,9 +1,16 @@
 FROM node:18.15.0-alpine
+
+RUN apk update
+RUN apk upgrade
+RUN apk add --no-cache git
+
 RUN mkdir /app
 WORKDIR /app
 COPY package.json /app
 COPY package-lock.json /app
-RUN npm i
+RUN npm ci
+
 COPY . /app
-EXPOSE 3001
-CMD ["npm", "dev"]
+RUN npm run build
+
+ENTRYPOINT ["npm", "run", "preview"]
