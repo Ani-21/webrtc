@@ -6,15 +6,19 @@ services:
       context: ../../services/web-client
       dockerfile: Dockerfile
     restart: always
+    depends_on:
+      - socket
+    environment:
+      - NODE_ENV=production
     ports:
       - "3101:3001"
 
   socket:
     build:
       context: ../../services/socket
+      environment:
+        - ALLOWED_ORIGIN=https://kurentochat-ak.staging.forasoft.com
       dockerfile: Dockerfile
     restart: always
-    volumes:
-      - "../../services/socket:/app"
     ports:
       - "3100:3000"
