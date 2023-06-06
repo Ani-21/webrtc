@@ -6,7 +6,7 @@ RUN apk add --no-cache git
 
 WORKDIR /app
 ADD package.json package-lock.json ./
-RUN npm ci
+RUN npm i
 ADD . /app
 
 RUN npm run build
