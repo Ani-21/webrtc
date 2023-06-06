@@ -17,9 +17,9 @@ services:
   socket:
     build:
       context: ../../services/socket
-      environment:
-        - ALLOWED_ORIGIN=https://kurentochat-ak.staging.forasoft.com
       dockerfile: Dockerfile
+    environment:
+      - ALLOWED_ORIGIN=https://kurentochat-ak.staging.forasoft.com
     restart: always
     ports:
       - '3100:3000'
