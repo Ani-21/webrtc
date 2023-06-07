@@ -1,4 +1,7 @@
 import { CustomPaper } from "../custom";
+import { CameraIcon } from "../icons/Camera";
+import { EndCallIcon } from "../icons/EndCall";
+import { MicroIcon } from "../icons/Micro";
 import { ThirdCatIcon } from "../icons/ThirdCat";
 import styles from "./VideoContainer.module.scss";
 
@@ -12,6 +15,11 @@ export const VideoContainer = () => {
           <ThirdCatIcon />
         </CustomPaper>
       ))}
+      <div className={styles.buttonsContainer}>
+        <MicroIcon />
+        <CameraIcon />
+        <EndCallIcon />
+      </div>
     </div>
   );
 };

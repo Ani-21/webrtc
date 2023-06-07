@@ -6,6 +6,7 @@ import { AppState } from "../../state";
 
 interface IData {
     name: string;
+    userId: string;
     error: string;
 }
 
@@ -18,6 +19,7 @@ export const loginService = async (socket: Socket, res: ValidData) => {
 
     const data: IData = {
         name,
+        userId: socket.id,
         error: "",
     };
 
