@@ -1,30 +1,30 @@
 import { useLoginContext } from "@/contexts/loginContext";
-import { useMemo } from "react";
+import { cnb } from "cnbuilder";
+import { formatDate } from "@/helpers/date/formatDate";
 import styles from "./ChatMessage.module.scss";
 
-type ChatMessageProps = {
-  userId: string;
-  message: string;
-  time: string;
-};
+interface ChatMessageProps {
+  messageData: {
+    userId: string;
+    message: string;
+    timestamp: string;
+  };
+}
 
-export const ChatMessage = ({ userId, message, time }: ChatMessageProps) => {
+export const ChatMessage = ({ messageData }: ChatMessageProps) => {
   const { userData } = useLoginContext();
-
-  const style = useMemo(() => {
-    if (userData.userId === userId) {
-      return `${styles.wrapper} ${styles.wrapperRight}`;
-    } else {
-      return styles.wrapper;
-    }
-  }, []);
+  const { userId, message, timestamp } = messageData;
 
   return (
     <div className={styles.parentContainer}>
-      <div className={style}>
+      <div
+        className={cnb(styles.wrapper, {
+          [styles.wrapperRight]: userData.userId === userId,
+        })}
+      >
         <div className={styles.content}>
           <p className={styles.message}>{message}</p>
-          <p className={styles.time}>{time}</p>
+          <p className={styles.time}>{formatDate(timestamp)}</p>
         </div>
       </div>
     </div>

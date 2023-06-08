@@ -1,33 +1,37 @@
-import { useContextMessage } from "@/contexts/messageProvider";
+import { useContextChat } from "@/contexts/chatProvider";
 
 import { CloseChatIcon } from "../icons/CloseChat";
 
 import { ChatFooter } from "../ChatFooter/ChatFooter";
 import styles from "./Chat.module.scss";
 import { ChatMessage } from "../ChatMessage/ChatMessage";
-import { formatDate } from "@/helpers";
+import { useTranslation } from "react-i18next";
+import { useOpenChatContext } from "@/contexts/openChatContext";
+import { IconButton } from "../IconButton/IconButton";
+
+interface IMessage {
+  id?: string;
+  userId: string;
+  timestamp: string;
+  message: string;
+}
 
 export const Chat = () => {
-  const { messages } = useContextMessage();
+  const { messages } = useContextChat();
+  const { t } = useTranslation("translation");
+  const { setOpenChat } = useOpenChatContext();
 
   return (
     <div className={styles.chatContainer}>
       <div className={styles.chatHeader}>
-        <CloseChatIcon
-          handleClick={() => {
-            console.log();
-          }}
-        />
-        <h2>Chat</h2>
+        <IconButton handleClick={() => setOpenChat(false)}>
+          <CloseChatIcon />
+        </IconButton>
+        <h2>{t("chat")}</h2>
       </div>
       <div className={styles.chatWrapper}>
-        {messages.map((msg) => (
-          <ChatMessage
-            key={msg.id}
-            userId={msg.userId}
-            message={msg.message}
-            time={formatDate(msg.timestamp)}
-          />
+        {messages.map((msg: IMessage) => (
+          <ChatMessage key={msg.id} messageData={msg} />
         ))}
       </div>
       <ChatFooter />

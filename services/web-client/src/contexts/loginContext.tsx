@@ -8,15 +8,27 @@ import {
 } from "react";
 import { useSocketContext } from "./socketContext";
 import { SocketEvent, SocketError } from "../const/socketEvents";
+import { useContextChat } from "./chatProvider";
 
-interface IData {
+interface IUser {
   name: string;
   userId: string;
+}
+
+interface IData {
+  userData: IUser;
   error?: string;
 }
 
+interface IMessage {
+  id?: string;
+  userId: string;
+  timestamp: string;
+  message: string;
+}
+
 interface ILoginContext {
-  userData: IData;
+  userData: IUser;
   isValidName: boolean;
   isFull: boolean;
   isLoggedIn: boolean;
@@ -26,7 +38,7 @@ interface ILoginContext {
 const LoginContext = createContext({} as ILoginContext);
 
 const LoginContextProvider = ({ children }: { children: ReactElement }) => {
-  const [userData, setUserData] = useState<IData>({
+  const [userData, setUserData] = useState<IUser>({
     name: "",
     userId: "",
   });
@@ -34,6 +46,7 @@ const LoginContextProvider = ({ children }: { children: ReactElement }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isFull, setIsFull] = useState(false);
   const { emit, subscribe, unsubscribe } = useSocketContext();
+  const { getAllMessages } = useContextChat();
 
   const joinRoom = useCallback((name: string) => {
     emit(SocketEvent.userLogin, { name });
@@ -46,15 +59,23 @@ const LoginContextProvider = ({ children }: { children: ReactElement }) => {
       } else if (data.error === SocketError.userFullRoomError) {
         setIsFull(true);
       } else {
+        const { userData } = data;
         setUserData({
-          name: data.name,
-          userId: data.userId,
+          name: userData.name,
+          userId: userData.userId,
+        });
+        subscribe(SocketEvent.getMessages, (data: IMessage[]) => {
+          getAllMessages(data);
+          console.log(data);
         });
         setIsLoggedIn(true);
       }
     });
 
-    return () => unsubscribe(SocketEvent.userValidateEnter);
+    return () => {
+      unsubscribe(SocketEvent.userValidateEnter);
+      unsubscribe(SocketEvent.getMessages);
+    };
   }, [subscribe, unsubscribe]);
 
   return (

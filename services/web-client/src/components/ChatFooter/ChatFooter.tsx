@@ -1,41 +1,30 @@
-import { useSocketContext } from "@/contexts/socketContext";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { SendIcon } from "../icons/Send";
 import { CustomInput } from "../custom";
-import { SocketEvent } from "@/const/socketEvents";
 import styles from "./ChatFooter.module.scss";
-import { useLoginContext } from "@/contexts/loginContext";
+import { useContextChat } from "@/contexts/chatProvider";
+import { IconButton } from "../IconButton/IconButton";
 
 export const ChatFooter = () => {
   const [message, setMessage] = useState("");
-  const { emit } = useSocketContext();
-  const { userData } = useLoginContext();
 
-  const data = {
-    message,
-    userId: userData.userId,
-    timestamp: new Date().toLocaleString("ru"),
-  };
+  const { sendMessage } = useContextChat();
 
-  const sendMessage = () => {
-    if (message.length) {
-      emit(SocketEvent.sendMessage, data);
-      setMessage("");
-    } else {
-      return;
-    }
-  };
+  const clearInput = () => setMessage("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value);
-  };
+  }, []);
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLFormElement>) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      sendMessage();
-    }
-  };
+  const handleKeyPress = useCallback(
+    (e: React.KeyboardEvent<HTMLFormElement>) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        sendMessage(message, clearInput);
+      }
+    },
+    []
+  );
 
   return (
     <div className={styles.chatForm}>
@@ -43,7 +32,11 @@ export const ChatFooter = () => {
         <CustomInput
           myHeight="small"
           disableUnderline
-          endAdornment={<SendIcon handleClick={sendMessage} />}
+          endAdornment={
+            <IconButton handleClick={() => sendMessage(message, clearInput)}>
+              <SendIcon />
+            </IconButton>
+          }
           onChange={handleChange}
           value={message}
           name="message"

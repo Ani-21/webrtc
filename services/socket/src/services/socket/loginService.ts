@@ -1,12 +1,21 @@
 import { Socket } from "socket.io";
 import { io } from "../../config/socket";
-import { SocketEvent, SocketError } from "../../const/user/socketEvents";
+import {
+    SocketUserEvent,
+    SocketUserError,
+    SocketRoom,
+} from "../../const/user/socketEvents";
+import { SocketMessageEvent } from "../../const/messages/socketEvent";
 import { MAX_LENGTH } from "../../const/user/constants";
 import { AppState } from "../../state";
 
-interface IData {
+interface IUser {
     name: string;
     userId: string;
+}
+
+interface IData {
+    userData: IUser;
     error: string;
 }
 
@@ -18,24 +27,36 @@ export const loginService = async (socket: Socket, res: ValidData) => {
     const { name } = res;
 
     const data: IData = {
-        name,
-        userId: socket.id,
+        userData: {
+            name,
+            userId: socket.id,
+        },
         error: "",
     };
 
     const usersInRoom = AppState.getUsers().length;
+    let { userData } = data;
+
+    console.log(userData);
 
     if (usersInRoom === MAX_LENGTH) {
-        data.error = SocketError.fullRoomError;
-        io.to(socket.id).emit(SocketEvent.validateEnter, data);
+        data.error = SocketUserError.fullRoomError;
+        io.to(userData.userId).emit(SocketUserEvent.validateEnter, data);
     } else {
         if (name.length) {
-            data.name = name;
-            AppState.addNewUser({ id: socket.id, name });
-            io.to(socket.id).emit(SocketEvent.validateEnter, data);
+            userData.name = name;
+            const messages = AppState.getMessages();
+            AppState.addNewUser({ id: userData.userId, name });
+            io.to(userData.userId).emit(SocketUserEvent.validateEnter, data);
+            console.log("MESSSAGES", messages);
+            socket.join(SocketRoom.room);
+            io.to(userData.userId).emit(
+                SocketMessageEvent.getMessages,
+                messages
+            );
         } else {
-            data.error = SocketError.invalidNameError;
-            io.to(socket.id).emit(SocketEvent.validateEnter, data);
+            data.error = SocketUserError.invalidNameError;
+            io.to(userData.userId).emit(SocketUserEvent.validateEnter, data);
         }
     }
 };

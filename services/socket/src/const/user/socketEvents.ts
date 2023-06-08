@@ -1,8 +1,12 @@
-export enum SocketEvent {
+export enum SocketRoom {
+    room = "room",
+}
+
+export enum SocketUserEvent {
     validateEnter = "user:validateEnter",
 }
 
-export enum SocketError {
+export enum SocketUserError {
     fullRoomError = "fullRoomError",
     invalidNameError = "invalidNameError",
 }
