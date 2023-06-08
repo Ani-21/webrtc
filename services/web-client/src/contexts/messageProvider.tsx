@@ -18,7 +18,7 @@ type messageProvider = {
 
 interface IMessage {
   id?: string;
-  socketId: string;
+  userId: string;
   timestamp: string;
   message: string;
 }

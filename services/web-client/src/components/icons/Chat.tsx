@@ -1,6 +1,16 @@
-export const ChatIcon = () => {
+type ChatIconProps = {
+  handleClick: () => void;
+};
+
+export const ChatIcon = ({ handleClick }: ChatIconProps) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="48"
+      height="48"
+      fill="none"
+      onClick={handleClick}
+    >
       <rect width="48" height="48" fill="#fff" rx="24" />
       <path
         fill="#181B1D"

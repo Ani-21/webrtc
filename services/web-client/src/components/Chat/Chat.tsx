@@ -2,7 +2,7 @@ import { useContextMessage } from "@/contexts/messageProvider";
 
 import { CloseChatIcon } from "../icons/CloseChat";
 
-import { ChatFooter } from "../ChatFooter.tsx/ChatFooter";
+import { ChatFooter } from "../ChatFooter/ChatFooter";
 import styles from "./Chat.module.scss";
 import { ChatMessage } from "../ChatMessage/ChatMessage";
 import { formatDate } from "@/helpers";
@@ -21,18 +21,16 @@ export const Chat = () => {
         <h2>Chat</h2>
       </div>
       <div className={styles.chatWrapper}>
-        <div className={styles.chatBody}>
-          {messages.map((msg) => (
-            <ChatMessage
-              key={msg.id}
-              socketId={msg.socketId}
-              message={msg.message}
-              time={formatDate(msg.timestamp)}
-            />
-          ))}
-        </div>
-        <ChatFooter />
+        {messages.map((msg) => (
+          <ChatMessage
+            key={msg.id}
+            userId={msg.userId}
+            message={msg.message}
+            time={formatDate(msg.timestamp)}
+          />
+        ))}
       </div>
+      <ChatFooter />
     </div>
   );
 };

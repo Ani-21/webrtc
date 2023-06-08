@@ -18,17 +18,28 @@ export const ChatFooter = () => {
   };
 
   const sendMessage = () => {
-    emit(SocketEvent.sendMessage, data);
-    setMessage("");
+    if (message.length) {
+      emit(SocketEvent.sendMessage, data);
+      setMessage("");
+    } else {
+      return;
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value);
   };
 
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLFormElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      sendMessage();
+    }
+  };
+
   return (
     <div className={styles.chatForm}>
-      <form>
+      <form onKeyDown={handleKeyPress}>
         <CustomInput
           myHeight="small"
           disableUnderline

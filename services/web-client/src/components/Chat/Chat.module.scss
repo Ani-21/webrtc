@@ -26,9 +26,6 @@
 
 .chatWrapper {
   padding: 12px;
-  overflow: scroll;
-}
-
-.chatBody {
-  justify-content: flex-end;
+  overflow: auto;
+  height: calc(100vh - 128px);
 }
