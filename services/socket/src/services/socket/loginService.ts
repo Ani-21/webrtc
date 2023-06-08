@@ -37,8 +37,6 @@ export const loginService = async (socket: Socket, res: ValidData) => {
     const usersInRoom = AppState.getUsers().length;
     let { userData } = data;
 
-    console.log(userData);
-
     if (usersInRoom === MAX_LENGTH) {
         data.error = SocketUserError.fullRoomError;
         io.to(userData.userId).emit(SocketUserEvent.validateEnter, data);
@@ -48,7 +46,6 @@ export const loginService = async (socket: Socket, res: ValidData) => {
             const messages = AppState.getMessages();
             AppState.addNewUser({ id: userData.userId, name });
             io.to(userData.userId).emit(SocketUserEvent.validateEnter, data);
-            console.log("MESSSAGES", messages);
             socket.join(SocketRoom.room);
             io.to(userData.userId).emit(
                 SocketMessageEvent.getMessages,

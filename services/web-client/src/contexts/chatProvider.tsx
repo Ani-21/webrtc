@@ -31,7 +31,7 @@ const ChatContext = createContext({} as ChatContextProps);
 const ChatContextProvider = ({ children }: chatProviderProps) => {
   const [messages, setMessages] = useState<IMessage[]>([]);
   const { emit, subscribe, unsubscribe } = useSocketContext();
-  const { userData } = useLoginContext();
+  const { userData, isLoggedIn } = useLoginContext();
 
   const getAllMessages = useCallback((data: IMessage[]) => {
     setMessages(data);
@@ -54,10 +54,17 @@ const ChatContextProvider = ({ children }: chatProviderProps) => {
   }, []);
 
   useEffect(() => {
+    if (isLoggedIn) {
+      subscribe(SocketEvent.getMessages, (data: IMessage[]) => {
+        getAllMessages(data);
+      });
+    }
+
     subscribe(SocketEvent.recieveMessage, updateMessages);
 
     return () => {
       unsubscribe(SocketEvent.recieveMessage);
+      unsubscribe(SocketEvent.getMessages);
     };
   }, [subscribe, unsubscribe]);
 

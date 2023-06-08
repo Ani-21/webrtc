@@ -8,7 +8,6 @@ import {
 } from "react";
 import { useSocketContext } from "./socketContext";
 import { SocketEvent, SocketError } from "../const/socketEvents";
-import { useContextChat } from "./chatProvider";
 
 interface IUser {
   name: string;
@@ -18,13 +17,6 @@ interface IUser {
 interface IData {
   userData: IUser;
   error?: string;
-}
-
-interface IMessage {
-  id?: string;
-  userId: string;
-  timestamp: string;
-  message: string;
 }
 
 interface ILoginContext {
@@ -46,7 +38,6 @@ const LoginContextProvider = ({ children }: { children: ReactElement }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isFull, setIsFull] = useState(false);
   const { emit, subscribe, unsubscribe } = useSocketContext();
-  const { getAllMessages } = useContextChat();
 
   const joinRoom = useCallback((name: string) => {
     emit(SocketEvent.userLogin, { name });
@@ -63,10 +54,6 @@ const LoginContextProvider = ({ children }: { children: ReactElement }) => {
         setUserData({
           name: userData.name,
           userId: userData.userId,
-        });
-        subscribe(SocketEvent.getMessages, (data: IMessage[]) => {
-          getAllMessages(data);
-          console.log(data);
         });
         setIsLoggedIn(true);
       }
