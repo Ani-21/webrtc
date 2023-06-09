@@ -35,7 +35,7 @@ const ChatContextProvider = ({ children }: chatProviderProps) => {
 
   const sendMessage = useCallback(
     (message: string, callback: VoidFunction) => {
-      if (message.length) {
+      if (message.trim().length) {
         const data: IMessage = {
           id: uuidv4(),
           message,
@@ -57,12 +57,12 @@ const ChatContextProvider = ({ children }: chatProviderProps) => {
     if (isLoggedIn) {
       setMessages(messageHistory);
       subscribe(SocketEvent.recieveMessage, updateMessages);
+
+      return () => {
+        unsubscribe(SocketEvent.recieveMessage);
+      };
     }
 
-    return () => {
-      unsubscribe(SocketEvent.recieveMessage);
-      unsubscribe(SocketEvent.getMessages);
-    };
   }, [subscribe, unsubscribe, isLoggedIn, updateMessages]);
 
   return (
