@@ -3,7 +3,6 @@ export enum SocketEvent {
   userValidateEnter = "user:validateEnter",
   sendMessage = "messages:sendMessage",
   recieveMessage = "messages:recieveMessage",
-  getMessages = "messages:getMessages",
 }
 
 export enum SocketError {
