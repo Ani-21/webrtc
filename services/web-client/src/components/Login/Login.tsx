@@ -33,12 +33,14 @@ export const Login = () => {
         <div className={styles.inputContainer}>
           <CustomInput
             className={warningStyle}
+            myHeight="big"
+            isFocused="true"
             type={CustomInputTypes.text}
-            placeholder='Name'
+            placeholder="Name"
             disableUnderline
-            autoComplete='off'
+            autoComplete="off"
             value={name}
-            name='name'
+            name="name"
             onChange={handleChange}
           />
           {!isValidName && <span>* {t("repeat")}</span>}
@@ -46,7 +48,7 @@ export const Login = () => {
         <CustomButton
           className={styles.button}
           onClick={() => joinRoom(name)}
-          variant='contained'
+          variant="contained"
         >
           {t("joinRoom")}
         </CustomButton>

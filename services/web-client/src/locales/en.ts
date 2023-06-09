@@ -5,5 +5,6 @@ export const en = {
     back: "Back",
     input: "Enter your name",
     repeat: "Please, enter your name",
+    chat: "Chat",
   },
 };

@@ -1,11 +1,22 @@
 import { Socket } from "socket.io";
 import { io } from "../../config/socket";
-import { SocketEvent, SocketError } from "../../const/user/socketEvents";
+import {
+    SocketUserEvent,
+    SocketUserError,
+    SocketRoom,
+} from "../../const/user/socketEvents";
 import { MAX_LENGTH } from "../../const/user/constants";
 import { AppState } from "../../state";
+import { IMessage } from "../../const/messages/models";
+
+interface IUser {
+    name: string;
+    userId: string;
+}
 
 interface IData {
-    name: string;
+    messages: IMessage[];
+    userData: IUser;
     error: string;
 }
 
@@ -17,23 +28,29 @@ export const loginService = async (socket: Socket, res: ValidData) => {
     const { name } = res;
 
     const data: IData = {
-        name,
+        messages: AppState.getMessages(),
+        userData: {
+            name,
+            userId: socket.id,
+        },
         error: "",
     };
 
     const usersInRoom = AppState.getUsers().length;
+    let { userData } = data;
 
     if (usersInRoom === MAX_LENGTH) {
-        data.error = SocketError.fullRoomError;
-        io.to(socket.id).emit(SocketEvent.validateEnter, data);
+        data.error = SocketUserError.fullRoomError;
+        io.to(userData.userId).emit(SocketUserEvent.validateEnter, data);
     } else {
         if (name.length) {
-            data.name = name;
-            AppState.addNewUser({ id: socket.id, name });
-            io.to(socket.id).emit(SocketEvent.validateEnter, data);
+            userData.name = name;
+            AppState.addNewUser({ id: userData.userId, name });
+            socket.join(SocketRoom.room);
+            io.to(userData.userId).emit(SocketUserEvent.validateEnter, data);
         } else {
-            data.error = SocketError.invalidNameError;
-            io.to(socket.id).emit(SocketEvent.validateEnter, data);
+            data.error = SocketUserError.invalidNameError;
+            io.to(userData.userId).emit(SocketUserEvent.validateEnter, data);
         }
     }
 };

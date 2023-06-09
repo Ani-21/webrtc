@@ -1,0 +1,14 @@
+.roomContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sectionContainer {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  margin: 0 auto;
+  padding: 32px;
+}

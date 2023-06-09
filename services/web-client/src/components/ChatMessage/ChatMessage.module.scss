@@ -1,0 +1,36 @@
+.parentContainer {
+  display: flex;
+}
+.wrapper {
+  background-color: var(--bg-default);
+  padding: 0 12px;
+  gap: 10px;
+  border-radius: 12px;
+  width: fit-content;
+  border-radius: 12px 12px 12px 4px;
+  margin-bottom: 15px;
+}
+
+.wrapperRight {
+  align-self: flex-end;
+  margin-left: auto;
+  border-radius: 12px 12px 4px 12px;
+  margin-bottom: 25px;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.message {
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 18px;
+  font-stretch: 130;
+}
+.time {
+  color: var(--gray-border);
+}

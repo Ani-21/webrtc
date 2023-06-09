@@ -3,9 +3,16 @@ interface IUser {
     name: string;
 }
 
+interface IMessage {
+    id: string;
+    userId: string;
+    timestamp: Date;
+    message: string;
+}
+
 class State {
     private users: IUser[];
-    private messages: string[];
+    private messages: IMessage[];
 
     constructor() {
         this.users = [];
@@ -18,6 +25,10 @@ class State {
 
     addNewUser(user: IUser) {
         this.users.push(user);
+    }
+
+    addNewMessage(msg: IMessage) {
+        this.messages.push(msg);
     }
 
     getMessages() {

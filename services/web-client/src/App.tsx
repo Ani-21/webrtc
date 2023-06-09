@@ -9,7 +9,5 @@ export const App = () => {
     connect();
   }, []);
 
-  return (
-      <Room />
-  );
+  return <Room />;
 };

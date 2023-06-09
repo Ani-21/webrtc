@@ -1,0 +1,31 @@
+.chatContainer {
+  position: relative;
+  background: var(--bg-chat);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 340px;
+}
+
+.chatHeader {
+  display: flex;
+  align-items: center;
+  font-stretch: 130;
+  height: 64px;
+  border-bottom: 1px solid #2a2e30;
+  padding: 24px;
+  h2 {
+    font-family: var(--font-flex);
+    font-style: normal;
+    font-weight: 800;
+    font-size: 20px;
+    line-height: 28px;
+    margin-left: 10px;
+  }
+}
+
+.chatWrapper {
+  padding: 12px;
+  overflow: auto;
+  height: calc(100vh - 128px);
+}
