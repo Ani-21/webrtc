@@ -1,8 +1,4 @@
-type MuteMicroProps = {
-  handndeClick: () => void;
-};
-export const MuteMicroIcon = ({ handndeClick }: MuteMicroProps) => {
-  return (
+export const MuteMicroIcon = () =>  (
     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none">
       <rect width="48" height="48" fill="#fff" rx="24" />
       <path
@@ -19,4 +15,3 @@ export const MuteMicroIcon = ({ handndeClick }: MuteMicroProps) => {
       />
     </svg>
   );
-};
