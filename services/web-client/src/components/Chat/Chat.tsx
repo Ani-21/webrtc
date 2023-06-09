@@ -30,7 +30,7 @@ export const Chat = () => {
         <h2>{t("chat")}</h2>
       </div>
       <div className={styles.chatWrapper}>
-        {messages.map((msg: IMessage) => (
+        {messages?.map((msg: IMessage) => (
           <ChatMessage key={msg.id} messageData={msg} />
         ))}
       </div>

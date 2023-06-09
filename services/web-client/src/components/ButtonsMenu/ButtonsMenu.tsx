@@ -14,6 +14,7 @@ export const ButtonsMenu = () => {
 
   const handleOpen = () => setOpenChat(true);
 
+ 
   return (
     <div className={styles.buttonsContainer}>
       <div className={styles.mainButtons}>
@@ -21,11 +22,13 @@ export const ButtonsMenu = () => {
         <CameraIcon />
         <EndCallIcon />
       </div>
-      {openChat ? (
+      {openChat 
+      ? (
         <IconButton handleClick={handleClose}>
           <ChatOpenedIcon />
         </IconButton>
-      ) : (
+      ) 
+      : (
         <IconButton handleClick={handleOpen}>
           <ChatIcon />
         </IconButton>

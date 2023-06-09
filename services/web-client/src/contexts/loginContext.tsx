@@ -8,7 +8,6 @@ import {
 } from "react";
 import { useSocketContext } from "./socketContext";
 import { SocketEvent, SocketError } from "../const/socketEvents";
-import { useContextChat } from "./chatProvider";
 
 interface IUser {
   name: string;
@@ -17,14 +16,8 @@ interface IUser {
 
 interface IData {
   userData: IUser;
+  messages: IMessage[];
   error?: string;
-}
-
-interface IMessage {
-  id?: string;
-  userId: string;
-  timestamp: string;
-  message: string;
 }
 
 interface ILoginContext {
@@ -33,6 +26,14 @@ interface ILoginContext {
   isFull: boolean;
   isLoggedIn: boolean;
   joinRoom: (name: string) => void;
+  messageHistory: IMessage[];
+}
+
+interface IMessage {
+  id: string;
+  userId: string;
+  timestamp: string;
+  message: string;
 }
 
 const LoginContext = createContext({} as ILoginContext);
@@ -42,11 +43,11 @@ const LoginContextProvider = ({ children }: { children: ReactElement }) => {
     name: "",
     userId: "",
   });
+  const [messageHistory, setMessageHistory] = useState<IMessage[]>([]);
   const [isValidName, setIsValidName] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isFull, setIsFull] = useState(false);
   const { emit, subscribe, unsubscribe } = useSocketContext();
-  const { getAllMessages } = useContextChat();
 
   const joinRoom = useCallback((name: string) => {
     emit(SocketEvent.userLogin, { name });
@@ -64,17 +65,13 @@ const LoginContextProvider = ({ children }: { children: ReactElement }) => {
           name: userData.name,
           userId: userData.userId,
         });
-        subscribe(SocketEvent.getMessages, (data: IMessage[]) => {
-          getAllMessages(data);
-          console.log(data);
-        });
+        setMessageHistory(data.messages);
         setIsLoggedIn(true);
       }
     });
 
     return () => {
       unsubscribe(SocketEvent.userValidateEnter);
-      unsubscribe(SocketEvent.getMessages);
     };
   }, [subscribe, unsubscribe]);
 
@@ -86,6 +83,7 @@ const LoginContextProvider = ({ children }: { children: ReactElement }) => {
         isFull,
         isLoggedIn,
         joinRoom,
+        messageHistory,
       }}
     >
       {children}

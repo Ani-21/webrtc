@@ -8,10 +8,10 @@ import {
 } from "react";
 import { useLoginContext } from "./loginContext";
 import { useSocketContext } from "./socketContext";
+import { v4 as uuidv4 } from "uuid";
 
 interface ChatContextProps {
   messages: IMessage[];
-  getAllMessages: (data: IMessage[]) => void;
   sendMessage: (message: string, callback: VoidFunction) => void;
 }
 
@@ -20,7 +20,7 @@ interface chatProviderProps {
 }
 
 interface IMessage {
-  id?: string;
+  id: string;
   userId: string;
   timestamp: string;
   message: string;
@@ -31,38 +31,41 @@ const ChatContext = createContext({} as ChatContextProps);
 const ChatContextProvider = ({ children }: chatProviderProps) => {
   const [messages, setMessages] = useState<IMessage[]>([]);
   const { emit, subscribe, unsubscribe } = useSocketContext();
-  const { userData } = useLoginContext();
+  const { userData, isLoggedIn, messageHistory } = useLoginContext();
 
-  const getAllMessages = useCallback((data: IMessage[]) => {
-    setMessages(data);
-  }, []);
-
-  const sendMessage = useCallback((message: string, callback: VoidFunction) => {
-    if (message.length) {
-      const data: IMessage = {
-        message,
-        userId: userData.userId,
-        timestamp: new Date().toLocaleString("ru"),
-      };
-      emit(SocketEvent.sendMessage, data);
-      callback();
-    }
-  }, []);
+  const sendMessage = useCallback(
+    (message: string, callback: VoidFunction) => {
+      if (message.length) {
+        const data: IMessage = {
+          id: uuidv4(),
+          message,
+          userId: userData.userId,
+          timestamp: new Date().toLocaleString("ru"),
+        };
+        emit(SocketEvent.sendMessage, data);
+        callback();
+      }
+    },
+    [userData.userId]
+  );
 
   const updateMessages = useCallback((messageData: IMessage) => {
     setMessages((prev) => [...prev, messageData]);
   }, []);
 
   useEffect(() => {
-    subscribe(SocketEvent.recieveMessage, updateMessages);
+    if (isLoggedIn) {
+      setMessages(messageHistory);
+      subscribe(SocketEvent.recieveMessage, updateMessages);
+    }
 
     return () => {
       unsubscribe(SocketEvent.recieveMessage);
     };
-  }, [subscribe, unsubscribe]);
+  }, [subscribe, unsubscribe, isLoggedIn, updateMessages]);
 
   return (
-    <ChatContext.Provider value={{ messages, sendMessage, getAllMessages }}>
+    <ChatContext.Provider value={{ messages, sendMessage }}>
       {children}
     </ChatContext.Provider>
   );

@@ -7,7 +7,7 @@ interface IconButtonProps {
 
 export const IconButton = ({ handleClick, children }: IconButtonProps) => {
   return (
-    <button className={styles.customButton} onClick={handleClick}>
+    <button type="button" className={styles.customButton} onClick={handleClick}>
       {children}
     </button>
   );

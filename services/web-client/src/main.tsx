@@ -12,15 +12,15 @@ import "./styles/index.scss";
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <I18NextProvider>
     <SocketContextProvider>
-      <ChatContextProvider>
-        <LoginContextProvider>
+      <LoginContextProvider>
+        <ChatContextProvider>
           <OpenChatContextProvider>
             <React.StrictMode>
               <App />
             </React.StrictMode>
           </OpenChatContextProvider>
-        </LoginContextProvider>
-      </ChatContextProvider>
+        </ChatContextProvider>
+      </LoginContextProvider>
     </SocketContextProvider>
   </I18NextProvider>
 );

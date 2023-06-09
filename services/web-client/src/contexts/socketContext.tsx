@@ -28,9 +28,6 @@ const SocketContextProvider: React.FC<IProps> = (props) => {
 
   const actions = useSocket({
     url: publicConfig.socketUrl,
-    connectionOptions: {
-      path: "/socket.io",
-    },
   });
 
   return (
