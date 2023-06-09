@@ -61,6 +61,7 @@ const ChatContextProvider = ({ children }: chatProviderProps) => {
 
     return () => {
       unsubscribe(SocketEvent.recieveMessage);
+      unsubscribe(SocketEvent.getMessages);
     };
   }, [subscribe, unsubscribe, isLoggedIn, updateMessages]);
 
