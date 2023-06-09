@@ -21,6 +21,7 @@ interface chatProviderProps {
 
 interface IMessage {
   id: string;
+  name: string
   userId: string;
   timestamp: string;
   message: string;
@@ -38,6 +39,7 @@ const ChatContextProvider = ({ children }: chatProviderProps) => {
       if (message.trim().length) {
         const data: IMessage = {
           id: uuidv4(),
+          name: userData.name,
           message,
           userId: userData.userId,
           timestamp: new Date().toLocaleString("ru"),

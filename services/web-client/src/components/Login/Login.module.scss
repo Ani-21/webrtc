@@ -48,4 +48,12 @@
 
 .button {
   width: 100%;
+  text-transform: capitalize !important;
+}
+
+.buttonFull {
+  width: 100%;
+  text-transform: capitalize !important;
+  background-color: white !important;
+  color: black !important;
 }

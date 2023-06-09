@@ -12,7 +12,7 @@ export const LoginFull = () => {
       <form className={styles.content}>
         <FourthCatIcon />
         <h1 className={styles.title}>{t("roomIsFull")}</h1>
-        <CustomButton className={styles.button} variant="contained">
+        <CustomButton className={styles.buttonFull} variant="contained">
           {t("back")}
         </CustomButton>
       </form>

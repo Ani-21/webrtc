@@ -1,12 +1,12 @@
 .parentContainer {
   display: flex;
 }
+
 .wrapper {
   background-color: var(--bg-default);
-  padding: 0 12px;
-  gap: 10px;
+  padding: 12px;
   border-radius: 12px;
-  width: fit-content;
+  max-width: 200px;
   border-radius: 12px 12px 12px 4px;
   margin-bottom: 15px;
 }
@@ -22,7 +22,16 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 4px;
+  gap: 10px;
+  p {
+    margin: 0;
+    max-width: 100px;
+    overflow-wrap: break-word;
+  }
+}
+
+.input {
+  width: 100%;
 }
 
 .message {
@@ -31,6 +40,20 @@
   line-height: 18px;
   font-stretch: 130;
 }
+
 .time {
   color: var(--gray-border);
+  align-self: flex-end;
+}
+
+.username {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--purple);
+}
+
+.usernameRight {
+  color: var(--blue);
 }

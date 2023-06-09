@@ -6,5 +6,6 @@ export const en = {
     input: "Enter your name",
     repeat: "Please, enter your name",
     chat: "Chat",
+    message: "Start typing"
   },
 };

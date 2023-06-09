@@ -8,13 +8,8 @@ import { ChatMessage } from "../ChatMessage/ChatMessage";
 import { useTranslation } from "react-i18next";
 import { useOpenChatContext } from "@/contexts/openChatContext";
 import { IconButton } from "../IconButton/IconButton";
+import { IMessage } from "../models/IMessage";
 
-interface IMessage {
-  id?: string;
-  userId: string;
-  timestamp: string;
-  message: string;
-}
 
 export const Chat = () => {
   const { messages } = useContextChat();
