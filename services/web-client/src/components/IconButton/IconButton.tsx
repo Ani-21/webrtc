@@ -1,4 +1,4 @@
-import styles from "./IconButton.module.scss";
+import styles from './IconButton.module.scss';
 
 interface IconButtonProps {
   handleClick: () => void;

@@ -1,3 +1,3 @@
 export enum CustomInputTypes {
-  text = "text",
+  text = 'text',
 }

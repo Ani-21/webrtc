@@ -1,14 +1,8 @@
-import { SocketEvent } from "@/const/socketEvents";
-import {
-  useState,
-  createContext,
-  useEffect,
-  useContext,
-  useCallback,
-} from "react";
-import { useLoginContext } from "./loginContext";
-import { useSocketContext } from "./socketContext";
-import { v4 as uuidv4 } from "uuid";
+import { SocketEvent } from '@/const/socketEvents';
+import { useState, createContext, useEffect, useContext, useCallback } from 'react';
+import { useLoginContext } from './loginContext';
+import { useSocketContext } from './socketContext';
+import { v4 as uuidv4 } from 'uuid';
 
 interface ChatContextProps {
   messages: IMessage[];
@@ -21,7 +15,7 @@ interface chatProviderProps {
 
 interface IMessage {
   id: string;
-  name: string
+  name: string;
   userId: string;
   timestamp: string;
   message: string;
@@ -42,7 +36,7 @@ const ChatContextProvider = ({ children }: chatProviderProps) => {
           name: userData.name,
           message,
           userId: userData.userId,
-          timestamp: new Date().toLocaleString("ru"),
+          timestamp: new Date().toLocaleString('ru'),
         };
         emit(SocketEvent.sendMessage, data);
         callback();
@@ -64,14 +58,9 @@ const ChatContextProvider = ({ children }: chatProviderProps) => {
         unsubscribe(SocketEvent.recieveMessage);
       };
     }
-
   }, [subscribe, unsubscribe, isLoggedIn, updateMessages]);
 
-  return (
-    <ChatContext.Provider value={{ messages, sendMessage }}>
-      {children}
-    </ChatContext.Provider>
-  );
+  return <ChatContext.Provider value={{ messages, sendMessage }}>{children}</ChatContext.Provider>;
 };
 
 const useContextChat = () => useContext(ChatContext);

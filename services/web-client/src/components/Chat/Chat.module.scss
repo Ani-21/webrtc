@@ -1,10 +1,9 @@
 .chatContainer {
-  position: relative;
   background: var(--bg-chat);
   display: flex;
   flex-direction: column;
   height: 100vh;
-  width: 340px;
+  min-width: 340px;
 }
 
 .chatHeader {
@@ -25,7 +24,8 @@
 }
 
 .chatWrapper {
-  padding: 12px;
   overflow: auto;
-  height: calc(100vh - 128px);
+  height: 100%;
+  margin-top: 30px;
+  padding: 12px;
 }

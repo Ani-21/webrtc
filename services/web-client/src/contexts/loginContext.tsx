@@ -1,13 +1,6 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  ReactElement,
-  useEffect,
-  useCallback,
-} from "react";
-import { useSocketContext } from "./socketContext";
-import { SocketEvent, SocketError } from "../const/socketEvents";
+import { createContext, useContext, useState, ReactElement, useEffect, useCallback } from 'react';
+import { useSocketContext } from './socketContext';
+import { SocketEvent, SocketError } from '../const/socketEvents';
 
 interface IUser {
   name: string;
@@ -41,8 +34,8 @@ const LoginContext = createContext({} as ILoginContext);
 
 const LoginContextProvider = ({ children }: { children: ReactElement }) => {
   const [userData, setUserData] = useState<IUser>({
-    name: "",
-    userId: "",
+    name: '',
+    userId: '',
   });
   const [messageHistory, setMessageHistory] = useState<IMessage[]>([]);
   const [isValidName, setIsValidName] = useState(true);

@@ -1,11 +1,4 @@
-import {
-  createContext,
-  useContext,
-  ReactElement,
-  useState,
-  Dispatch,
-  SetStateAction,
-} from "react";
+import { createContext, useContext, ReactElement, useState, Dispatch, SetStateAction } from 'react';
 
 interface IOpenChatContext {
   openChat: boolean;
@@ -21,11 +14,7 @@ interface IProps {
 const OpenChatContextProvider = ({ children }: IProps) => {
   const [openChat, setOpenChat] = useState(false);
 
-  return (
-    <OpenChatContext.Provider value={{ openChat, setOpenChat }}>
-      {children}
-    </OpenChatContext.Provider>
-  );
+  return <OpenChatContext.Provider value={{ openChat, setOpenChat }}>{children}</OpenChatContext.Provider>;
 };
 
 const useOpenChatContext = () => useContext(OpenChatContext);
