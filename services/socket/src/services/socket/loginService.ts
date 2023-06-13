@@ -1,4 +1,5 @@
 import { Socket } from "socket.io";
+import { AccessToken } from "livekit-server-sdk";
 import { io } from "../../config/socket";
 import {
     SocketUserEvent,
@@ -12,6 +13,7 @@ import { IMessage } from "../../const/messages/models";
 interface IUser {
     name: string;
     userId: string;
+    token: string;
 }
 
 interface IData {
@@ -27,11 +29,23 @@ interface ValidData {
 export const loginService = async (socket: Socket, res: ValidData) => {
     const { name } = res;
 
+    const at = new AccessToken(
+        process.env.LIVEKIT_API_KEY,
+        process.env.LIVEKIT_API_SECRET,
+        {
+            identity: socket.id,
+            name,
+        }
+    );
+
+    at.addGrant({ roomJoin: true, room: SocketRoom.room });
+
     const data: IData = {
         messages: AppState.getMessages(),
         userData: {
             name,
             userId: socket.id,
+            token: at.toJwt(),
         },
         error: "",
     };

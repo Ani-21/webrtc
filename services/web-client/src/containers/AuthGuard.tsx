@@ -1,8 +1,14 @@
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useLoginContext } from '@/contexts/loginContext';
 
-export const AuthGuard = () => {
+interface IProps {
+  children: React.ReactElement;
+}
+
+export const AuthGuard: React.FC<IProps> = ({ children }) => {
   const { isLoggedIn } = useLoginContext();
 
-  return !isLoggedIn ? <Navigate to="/" /> : <Outlet />;
+  if (!isLoggedIn) return <Navigate to="/" />;
+
+  return children as React.ReactElement;
 };

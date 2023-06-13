@@ -5,11 +5,13 @@ import { SocketEvent, SocketError } from '../const/socketEvents';
 interface IUser {
   name: string;
   userId: string;
+  token: string;
 }
 
 interface IData {
-  userData: IUser;
   messages: IMessage[];
+  userData: IUser;
+  token: string;
   error?: string;
 }
 
@@ -36,6 +38,7 @@ const LoginContextProvider = ({ children }: { children: ReactElement }) => {
   const [userData, setUserData] = useState<IUser>({
     name: '',
     userId: '',
+    token: '',
   });
   const [messageHistory, setMessageHistory] = useState<IMessage[]>([]);
   const [isValidName, setIsValidName] = useState(true);
@@ -54,10 +57,11 @@ const LoginContextProvider = ({ children }: { children: ReactElement }) => {
       } else if (data.error === SocketError.userFullRoomError) {
         setIsFull(true);
       } else {
-        const { userData } = data;
+        const { userData: userInfo } = data;
         setUserData({
-          name: userData.name,
-          userId: userData.userId,
+          name: userInfo.name,
+          userId: userInfo.userId,
+          token: userInfo.token,
         });
         setMessageHistory(data.messages);
         setIsLoggedIn(true);

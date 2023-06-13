@@ -24,10 +24,10 @@ export const Login = () => {
 
   const onEnterRoom = () => {
     joinRoom(name);
-    if (!isFull) {
-      navigate('/room');
-    } else {
+    if (isFull) {
       navigate('/full');
+    } else {
+      navigate('/room');
     }
   };
 

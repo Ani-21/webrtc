@@ -1,4 +1,4 @@
-import { createContext, useContext, ReactElement, useState, Dispatch, SetStateAction } from 'react';
+import { createContext, useContext, ReactElement, useState, Dispatch, SetStateAction, useEffect } from 'react';
 
 interface IOpenChatContext {
   openChat: boolean;
