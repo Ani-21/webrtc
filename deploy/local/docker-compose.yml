@@ -16,3 +16,15 @@ services:
     restart: always
     ports:
       - "3000:3000"
+
+  livekit:
+    build:
+      context: ../../services/livekit
+      dockerfile: Dockerfile.dev
+      args:
+        - LIVEKIT_IP=127.0.0.1
+    restart: always
+    ports:
+      - "7880:7880"
+      - "7881:7881"
+      - "7882:7882/udp"

@@ -19,24 +19,26 @@ const RoomContextProvider = ({ children }: IProps) => {
 
   const livekitWssUrl = import.meta.env.VITE_LIVEKIT_WSS;
 
-  const handleConnect = useCallback(async () => {
-    const room = new Room({
-      dynacast: true,
-      videoCaptureDefaults: {
-        resolution: VideoPresets.h720.resolution,
-      },
-      stopLocalTrackOnUnpublish: true,
-      publishDefaults: {
-        videoCodec: 'vp8',
-      },
-    });
+  const room = new Room({
+    dynacast: true,
+    videoCaptureDefaults: {
+      resolution: VideoPresets.h720.resolution,
+    },
+    stopLocalTrackOnUnpublish: true,
+    publishDefaults: {
+      videoCodec: 'vp8',
+    },
+  });
 
+  const handleConnect = useCallback(async () => {
     await room.connect(livekitWssUrl, token);
+
+    console.log(token);
 
     const localUser = room.localParticipant;
     await localUser.setCameraEnabled(true);
     await localUser.setMicrophoneEnabled(true);
-  }, []);
+  }, [token]);
 
   return <RoomContext.Provider value={{ handleConnect, token }}>{children}</RoomContext.Provider>;
 };
