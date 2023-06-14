@@ -9,6 +9,8 @@ import {
   RemoteTrack,
   Participant,
   TrackPublication,
+  createLocalVideoTrack,
+  LocalParticipant,
 } from 'livekit-client';
 import { useLoginContext } from './loginContext';
 import { publicConfig } from '@/config/publicConfig';
@@ -56,7 +58,7 @@ const VideoChatContextProvider = ({ children }: IProps) => {
   });
 
   const handleLocalTrackPublished = useCallback(
-    (localTrackPublication: LocalTrackPublication, participant: Participant) => {
+    (localTrackPublication: LocalTrackPublication, participant: LocalParticipant) => {
       const updateParticipants = participants.map((user) => {
         if (user.id === participant.identity) {
           return {
@@ -80,15 +82,15 @@ const VideoChatContextProvider = ({ children }: IProps) => {
   );
 
   const handleLocalTrackUnpublished = useCallback(
-    (localTrackPublication: LocalTrackPublication, participant: Participant) => {
+    (localTrackPublication: LocalTrackPublication, participant: LocalParticipant) => {
       const updateParticipants = participants.map((user) => {
         if (user.id === participant.identity) {
           return {
             ...user,
-            audioTrack: undefined,
-            audioPub: undefined,
-            videoTrack: undefined,
-            videoPub: undefined,
+            audioTrack: null,
+            audioPub: null,
+            videoTrack: null,
+            videoPub: null,
             isCameraActive: false,
             isMicActive: false,
           };
@@ -122,7 +124,7 @@ const VideoChatContextProvider = ({ children }: IProps) => {
   );
 
   const handleRemoteTrackPublished = useCallback(
-    (remoteTrackPublication: RemoteTrackPublication, participant: Participant) => {
+    (remoteTrackPublication: RemoteTrackPublication, participant: RemoteParticipant) => {
       const updateParticipants = participants.map((user) => {
         if (user.id === participant.identity) {
           return {
@@ -267,6 +269,7 @@ const VideoChatContextProvider = ({ children }: IProps) => {
     room
       .on(RoomEvent.LocalTrackPublished, handleLocalTrackPublished)
       .on(RoomEvent.LocalTrackUnpublished, handleLocalTrackUnpublished)
+      // обработчик для подключения удаленных пользователей
       .on(RoomEvent.ParticipantConnected, handleParticipantConnected)
       .on(RoomEvent.TrackPublished, handleRemoteTrackPublished)
       .on(RoomEvent.TrackUnpublished, handleRemoteTrackUnpublished)
@@ -281,6 +284,15 @@ const VideoChatContextProvider = ({ children }: IProps) => {
 
     const localUser = room.localParticipant;
 
+    // локальня камера и аудио
+    try {
+      await localUser.setCameraEnabled(true);
+      await localUser.setMicrophoneEnabled(true);
+    } catch (err) {
+      console.log(err);
+    }
+
+    // инициализировать локального пользователя - не уверена в правильности такого решения
     setParticipants([
       {
         id: localUser.identity,
@@ -295,9 +307,7 @@ const VideoChatContextProvider = ({ children }: IProps) => {
         isLocalParticipant: false,
       },
     ]);
-
-    await localUser.enableCameraAndMicrophone();
-  }, [token]);
+  }, [token, room]);
 
   return (
     <VideoChatContext.Provider value={{ handleConnect, token, participants }}>{children}</VideoChatContext.Provider>

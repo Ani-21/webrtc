@@ -11,6 +11,8 @@ export const VideoContainer = () => {
   const empty = [<FirstCatIcon />, <SecondCatIcon />, <ThirdCatIcon />, <FourthCatIcon />];
   const { participants } = useVideoChatContext();
 
+  // в массиве отображается только локальный пользователь (потому что я синхронно в коде его инициализировала, не в обработчике ), а должны быть все
+  console.log(participants);
   return (
     <div className={styles.container}>
       {participants?.map((participant, i) => (
