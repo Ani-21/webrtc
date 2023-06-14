@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, ReactElement, useEffect, useCallback } from 'react';
 import { useSocketContext } from './socketContext';
 import { SocketEvent, SocketError } from '../const/socketEvents';
+import { useNavigate } from 'react-router-dom';
 
 interface IUser {
   name: string;

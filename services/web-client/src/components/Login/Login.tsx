@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CustomButton, CustomInput, CustomPaper } from '@/components/custom';
 import { useLoginContext } from '@/contexts/loginContext';
@@ -9,10 +9,10 @@ import { useNavigate } from 'react-router-dom';
 
 export const Login = () => {
   const [name, setName] = useState('');
-  const navigate = useNavigate();
   const { t } = useTranslation('translation');
+  const navigate = useNavigate();
 
-  const { isValidName, isFull, joinRoom } = useLoginContext();
+  const { isValidName, isFull, joinRoom, isLoggedIn } = useLoginContext();
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -29,7 +29,7 @@ export const Login = () => {
     } else {
       navigate('/room');
     }
-  }, [isFull, name]);
+  }, [name, isFull]);
 
   return (
     <CustomPaper className={styles.container}>

@@ -19,10 +19,10 @@ export const App = () => {
     <Routes>
       <Route path="/" element={<Login />} />
 
-      <Route element={<AuthGuard />}>
-        <Route index path="/room" element={<RoomPage />} />
-        <Route path="/full" element={<LoginFull />} />
-      </Route>
+      {/* <Route element={<AuthGuard />}> */}
+      <Route index path="/room" element={<RoomPage />} />
+      <Route path="/full" element={<LoginFull />} />
+      {/* </Route> */}
     </Routes>
   );
 };

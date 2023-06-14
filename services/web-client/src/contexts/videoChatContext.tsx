@@ -112,10 +112,10 @@ const VideoChatContextProvider = ({ children }: IProps) => {
         username: participant.name,
         isCameraActive: true,
         isMicActive: true,
-        audioTrack: undefined,
-        audioPub: undefined,
-        videoTrack: undefined,
-        videoPub: undefined,
+        audioTrack: null,
+        audioPub: null,
+        videoTrack: null,
+        videoPub: null,
         isLocalParticipant: false,
       };
       setParticipants((prev) => [...prev, participantConnected]);
