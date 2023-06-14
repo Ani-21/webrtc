@@ -10,7 +10,6 @@ const VideoComponent = ({ src }: VideoProps) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
 
-  // тут все в null, тк не отрабатывают обработчики
   console.log('videoRef', videoRef);
   console.log('streamRef', streamRef);
   console.log('src', src);

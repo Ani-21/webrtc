@@ -35,7 +35,12 @@ export const loginService = async (socket: Socket, res: ValidData) => {
         name,
     });
 
-    at.addGrant({ roomJoin: true, room: SocketRoom.room });
+    at.addGrant({
+        roomJoin: true,
+        room: SocketRoom.room,
+        canPublish: true,
+        canSubscribe: true,
+    });
 
     const data: IData = {
         messages: AppState.getMessages(),

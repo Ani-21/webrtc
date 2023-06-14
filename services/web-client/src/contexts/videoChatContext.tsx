@@ -59,24 +59,40 @@ const VideoChatContextProvider = ({ children }: IProps) => {
 
   const handleLocalTrackPublished = useCallback(
     (localTrackPublication: LocalTrackPublication, participant: LocalParticipant) => {
-      const updateParticipants = participants.map((user) => {
-        if (user.id === participant.identity) {
-          return {
-            ...user,
-            audioTrack: localTrackPublication.audioTrack?.mediaStreamTrack,
-            audioPub: localTrackPublication,
-            videoTrack: localTrackPublication.videoTrack?.mediaStreamTrack,
-            videoPub: localTrackPublication,
-            isLocalParticipant: true,
-            isCameraActive: true,
-            isMicActive: true,
-          };
-        } else {
-          return user;
-        }
-      });
+      console.log('local track published', localTrackPublication);
+      if (participants.length === 0) {
+        participants.push({
+          id: participant.identity,
+          isLocalUser: true,
+          username: participant.name,
+          isCameraActive: true,
+          isMicActive: true,
+          audioTrack: null,
+          audioPub: null,
+          videoTrack: null,
+          videoPub: null,
+          isLocalParticipant: false,
+        });
+      } else {
+        const updateParticipants = participants.map((user) => {
+          if (user.id === participant.identity) {
+            return {
+              ...user,
+              audioTrack: localTrackPublication.audioTrack?.mediaStreamTrack,
+              audioPub: localTrackPublication,
+              videoTrack: localTrackPublication.videoTrack?.mediaStreamTrack,
+              videoPub: localTrackPublication,
+              isLocalParticipant: true,
+              isCameraActive: true,
+              isMicActive: true,
+            };
+          } else {
+            return user;
+          }
+        });
 
-      setParticipants(updateParticipants);
+        setParticipants(updateParticipants);
+      }
     },
     [participants]
   );
@@ -269,7 +285,6 @@ const VideoChatContextProvider = ({ children }: IProps) => {
     room
       .on(RoomEvent.LocalTrackPublished, handleLocalTrackPublished)
       .on(RoomEvent.LocalTrackUnpublished, handleLocalTrackUnpublished)
-      // обработчик для подключения удаленных пользователей
       .on(RoomEvent.ParticipantConnected, handleParticipantConnected)
       .on(RoomEvent.TrackPublished, handleRemoteTrackPublished)
       .on(RoomEvent.TrackUnpublished, handleRemoteTrackUnpublished)
@@ -284,29 +299,12 @@ const VideoChatContextProvider = ({ children }: IProps) => {
 
     const localUser = room.localParticipant;
 
-    // локальня камера и аудио
     try {
       await localUser.setCameraEnabled(true);
       await localUser.setMicrophoneEnabled(true);
     } catch (err) {
       console.log(err);
     }
-
-    // инициализировать локального пользователя - не уверена в правильности такого решения
-    setParticipants([
-      {
-        id: localUser.identity,
-        isLocalUser: true,
-        username: localUser.name,
-        isCameraActive: true,
-        isMicActive: true,
-        audioTrack: null,
-        audioPub: null,
-        videoTrack: null,
-        videoPub: null,
-        isLocalParticipant: false,
-      },
-    ]);
   }, [token, room]);
 
   return (
