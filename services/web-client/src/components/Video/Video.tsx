@@ -1,8 +1,8 @@
 import { useEffect, useRef, memo } from 'react';
 
 interface VideoProps {
-  className: string;
-  src: string;
+  className?: string;
+  src: MediaStreamTrack | null | undefined;
 }
 
 const VideoComponent = ({ className, src }: VideoProps) => {
@@ -12,14 +12,18 @@ const VideoComponent = ({ className, src }: VideoProps) => {
   useEffect(() => {
     const videoElement = videoRef.current;
 
-    if (videoElement) {
+    if (videoElement && src) {
       streamRef.current = new MediaStream();
 
       streamRef.current.addTrack(src);
 
       videoElement.srcObject = streamRef.current;
 
-      videoElement.play();
+      videoElement.play().catch((e) => {
+        if (e.name !== 'AbortError') {
+          console.log('Error; Video.play;', e);
+        }
+      });
     }
 
     return () => {

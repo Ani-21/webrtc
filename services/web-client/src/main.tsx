@@ -5,9 +5,8 @@ import { App } from './App.tsx';
 import { LoginContextProvider } from './contexts/loginContext';
 import { SocketContextProvider } from './contexts/socketContext';
 import { I18NextProvider } from './contexts/i18NextProvider';
-import { OpenChatContextProvider } from './contexts/openChatContext';
 import { ChatContextProvider } from './contexts/chatProvider';
-import { RoomContextProvider } from './contexts/roomContext';
+import { VideoChatContextProvider } from './contexts/videoChatContext';
 
 import './styles/index.scss';
 
@@ -15,17 +14,15 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <I18NextProvider>
     <SocketContextProvider>
       <LoginContextProvider>
-        <RoomContextProvider>
+        <VideoChatContextProvider>
           <ChatContextProvider>
-            <OpenChatContextProvider>
-              <React.StrictMode>
-                <BrowserRouter>
-                  <App />
-                </BrowserRouter>
-              </React.StrictMode>
-            </OpenChatContextProvider>
+            <React.StrictMode>
+              <BrowserRouter>
+                <App />
+              </BrowserRouter>
+            </React.StrictMode>
           </ChatContextProvider>
-        </RoomContextProvider>
+        </VideoChatContextProvider>
       </LoginContextProvider>
     </SocketContextProvider>
   </I18NextProvider>

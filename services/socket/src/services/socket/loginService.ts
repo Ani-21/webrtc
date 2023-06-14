@@ -9,6 +9,7 @@ import {
 import { MAX_LENGTH } from "../../const/user/constants";
 import { AppState } from "../../state";
 import { IMessage } from "../../const/messages/models";
+import { vars } from "../../config/vars";
 
 interface IUser {
     name: string;
@@ -29,14 +30,10 @@ interface ValidData {
 export const loginService = async (socket: Socket, res: ValidData) => {
     const { name } = res;
 
-    const at = new AccessToken(
-        process.env.LIVEKIT_API_KEY,
-        process.env.LIVEKIT_API_SECRET,
-        {
-            identity: socket.id,
-            name,
-        }
-    );
+    const at = new AccessToken(vars.apiKey, vars.apiSecret, {
+        identity: socket.id,
+        name,
+    });
 
     at.addGrant({ roomJoin: true, room: SocketRoom.room });
 

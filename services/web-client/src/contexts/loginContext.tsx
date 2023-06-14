@@ -20,6 +20,7 @@ interface ILoginContext {
   isValidName: boolean;
   isFull: boolean;
   isLoggedIn: boolean;
+  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
   joinRoom: (name: string) => void;
   messageHistory: IMessage[];
 }
@@ -80,6 +81,7 @@ const LoginContextProvider = ({ children }: { children: ReactElement }) => {
         isValidName,
         isFull,
         isLoggedIn,
+        setIsLoggedIn,
         joinRoom,
         messageHistory,
       }}

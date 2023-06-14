@@ -1,18 +1,16 @@
-import { useContextChat } from '@/contexts/chatProvider';
+import { useChatContext } from '@/contexts/chatProvider';
 import { useChatScroll } from '@/hooks/useChatScroll';
 import { CloseChatIcon } from '../icons/CloseChat';
 import { ChatFooter } from '../ChatFooter/ChatFooter';
 import styles from './Chat.module.scss';
 import { ChatMessage } from '../ChatMessage/ChatMessage';
 import { useTranslation } from 'react-i18next';
-import { useOpenChatContext } from '@/contexts/openChatContext';
 import { IconButton } from '../IconButton/IconButton';
 import { IMessage } from '../models/IMessage';
 
 export const Chat = () => {
-  const { messages } = useContextChat();
+  const { messages, setOpenChat } = useChatContext();
   const { t } = useTranslation('translation');
-  const { setOpenChat } = useOpenChatContext();
   const ref = useChatScroll(messages);
 
   return (

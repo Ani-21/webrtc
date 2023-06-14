@@ -2,14 +2,14 @@ import { useCallback, useRef, useState } from 'react';
 import { SendIcon } from '../icons/Send';
 import { CustomInput } from '../custom';
 import styles from './ChatFooter.module.scss';
-import { useContextChat } from '@/contexts/chatProvider';
+import { useChatContext } from '@/contexts/chatProvider';
 import { IconButton } from '../IconButton/IconButton';
 import { useTranslation } from 'react-i18next';
 
 export const ChatFooter = () => {
   const [message, setMessage] = useState('');
   const { t } = useTranslation('translation');
-  const { sendMessage } = useContextChat();
+  const { sendMessage } = useChatContext();
 
   const clearInput = () => setMessage('');
 

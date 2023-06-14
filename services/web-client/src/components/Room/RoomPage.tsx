@@ -1,27 +1,25 @@
-import { useOpenChatContext } from '@/contexts/openChatContext';
-import { useRoomContext } from '@/contexts/roomContext';
 import { useEffect } from 'react';
-import { ButtonsMenu } from '../ButtonsMenu/ButtonsMenu';
+import { useChatContext } from '@/contexts/chatProvider';
+import { useLoginContext } from '@/contexts/loginContext';
+import { useVideoChatContext } from '@/contexts/videoChatContext';
 import { Chat } from '../Chat/Chat';
-import { VideoContainer } from '../VideoContainer/VideoContainer';
 import styles from './Room.module.scss';
+import { VideoPage } from '../VideoPage/VideoPage';
 
 export const RoomPage = () => {
-  const { handleConnect } = useRoomContext();
-  const { openChat } = useOpenChatContext();
+  const { openChat } = useChatContext();
+  const { handleConnect } = useVideoChatContext();
+  const { userData } = useLoginContext();
 
   useEffect(() => {
-    handleConnect();
-
-    return () => handleConnect();
-  }, [handleConnect]);
+    if (userData.token) {
+      handleConnect();
+    }
+  }, [userData.token]);
 
   return (
     <div className={styles.roomContainer}>
-      <div className={styles.sectionContainer}>
-        <VideoContainer />
-        <ButtonsMenu />
-      </div>
+      <VideoPage />
       {openChat && <Chat />}
     </div>
   );

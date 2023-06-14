@@ -7,6 +7,8 @@ import { v4 as uuidv4 } from 'uuid';
 interface ChatContextProps {
   messages: IMessage[];
   sendMessage: (message: string, callback: VoidFunction) => void;
+  openChat: boolean;
+  setOpenChat: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface chatProviderProps {
@@ -27,6 +29,7 @@ const ChatContextProvider = ({ children }: chatProviderProps) => {
   const [messages, setMessages] = useState<IMessage[]>([]);
   const { emit, subscribe, unsubscribe } = useSocketContext();
   const { userData, isLoggedIn, messageHistory } = useLoginContext();
+  const [openChat, setOpenChat] = useState(false);
 
   const sendMessage = useCallback(
     (message: string, callback: VoidFunction) => {
@@ -60,8 +63,10 @@ const ChatContextProvider = ({ children }: chatProviderProps) => {
     }
   }, [subscribe, unsubscribe, isLoggedIn, updateMessages]);
 
-  return <ChatContext.Provider value={{ messages, sendMessage }}>{children}</ChatContext.Provider>;
+  return (
+    <ChatContext.Provider value={{ messages, sendMessage, openChat, setOpenChat }}>{children}</ChatContext.Provider>
+  );
 };
 
-const useContextChat = () => useContext(ChatContext);
-export { useContextChat, ChatContextProvider };
+const useChatContext = () => useContext(ChatContext);
+export { useChatContext, ChatContextProvider };

@@ -22,14 +22,14 @@ export const Login = () => {
     return !isValidName ? styles.inputWarning : styles.input;
   }, [isValidName]);
 
-  const onEnterRoom = () => {
+  const onEnterRoom = useCallback(() => {
     joinRoom(name);
     if (isFull) {
       navigate('/full');
     } else {
       navigate('/room');
     }
-  };
+  }, [isFull, name]);
 
   return (
     <CustomPaper className={styles.container}>
