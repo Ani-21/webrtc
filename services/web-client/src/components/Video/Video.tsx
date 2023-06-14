@@ -1,13 +1,17 @@
 import { useEffect, useRef, memo } from 'react';
+import styles from './Video.module.scss';
 
 interface VideoProps {
   className?: string;
   src: MediaStreamTrack | null | undefined;
 }
 
-const VideoComponent = ({ className, src }: VideoProps) => {
+const VideoComponent = ({ src }: VideoProps) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
+
+  console.log('src', src);
+  console.log(videoRef);
 
   useEffect(() => {
     const videoElement = videoRef.current;
@@ -33,7 +37,7 @@ const VideoComponent = ({ className, src }: VideoProps) => {
     };
   }, []);
 
-  return <video className={className} ref={videoRef} autoPlay playsInline muted />;
+  return <video className={styles.video} ref={videoRef} autoPlay playsInline muted />;
 };
 
 export const Video = memo(VideoComponent);

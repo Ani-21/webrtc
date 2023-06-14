@@ -22,6 +22,7 @@ interface ILoginContext {
   isLoggedIn: boolean;
   setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
   joinRoom: (name: string) => void;
+  leaveRoom: () => void;
   messageHistory: IMessage[];
 }
 
@@ -51,6 +52,10 @@ const LoginContextProvider = ({ children }: { children: ReactElement }) => {
     emit(SocketEvent.userLogin, { name });
   }, []);
 
+  const leaveRoom = useCallback(() => {
+    emit(SocketEvent.userLogout, { id: userData.userId, isLoggedIn });
+  }, [isLoggedIn]);
+
   useEffect(() => {
     subscribe(SocketEvent.userValidateEnter, (data: IData) => {
       if (data.error === SocketError.userInvalidNameError) {
@@ -69,8 +74,11 @@ const LoginContextProvider = ({ children }: { children: ReactElement }) => {
       }
     });
 
+    subscribe(SocketEvent.userLogin, (res: boolean) => setIsLoggedIn(res));
+
     return () => {
       unsubscribe(SocketEvent.userValidateEnter);
+      unsubscribe(SocketEvent.userLogin);
     };
   }, [subscribe, unsubscribe]);
 
@@ -83,6 +91,7 @@ const LoginContextProvider = ({ children }: { children: ReactElement }) => {
         isLoggedIn,
         setIsLoggedIn,
         joinRoom,
+        leaveRoom,
         messageHistory,
       }}
     >

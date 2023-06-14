@@ -5,10 +5,10 @@ import { VideoControlButton } from '../VideoControlButton';
 
 export const EndCallControl = () => {
   const { t } = useTranslation('translation');
-  const { setIsLoggedIn } = useLoginContext();
+  const { leaveRoom } = useLoginContext();
 
   return (
-    <VideoControlButton handleClick={() => setIsLoggedIn(false)} tooltip={`${t('endCall')}`} color="danger">
+    <VideoControlButton handleClick={leaveRoom} tooltip={`${t('endCall')}`} color="danger">
       <CallIcon />
     </VideoControlButton>
   );

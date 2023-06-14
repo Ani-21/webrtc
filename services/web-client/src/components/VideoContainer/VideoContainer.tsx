@@ -1,3 +1,4 @@
+import { useVideoChatContext } from '@/contexts/videoChatContext';
 import { CustomPaper } from '../custom';
 import { FirstCatIcon } from '../icons/FirstCat';
 import { FourthCatIcon } from '../icons/FourthCat';
@@ -6,22 +7,15 @@ import { ThirdCatIcon } from '../icons/ThirdCat';
 import { Video } from '../Video/Video';
 import styles from './VideoContainer.module.scss';
 
-interface IProps {
-  username: string;
-  isLocalUser: boolean;
-  videoTrack: MediaStreamTrack | null | undefined;
-  audioTrack: MediaStreamTrack | null | undefined;
-}
-
-export const VideoContainer = ({ isLocalUser, videoTrack, username, audioTrack }: IProps) => {
+export const VideoContainer = () => {
   const empty = [<FirstCatIcon />, <SecondCatIcon />, <ThirdCatIcon />, <FourthCatIcon />];
+  const { participants } = useVideoChatContext();
 
   return (
     <div className={styles.container}>
-      {empty.map((cat, i) => (
+      {participants?.map((participant, i) => (
         <CustomPaper key={i} className={styles.video}>
-          {cat}
-          <Video src={videoTrack} />
+          {participant ? <Video src={participant.videoTrack} /> : empty[i]}
         </CustomPaper>
       ))}
     </div>

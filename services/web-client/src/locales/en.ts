@@ -4,6 +4,7 @@ export const en = {
     roomIsFull: 'Room is full',
     back: 'Back',
     input: 'Enter your name',
+    you: 'You',
     repeat: 'Please, enter your name',
     chat: 'Chat',
     message: 'Start typing',
