@@ -9,19 +9,22 @@ import { ChatContextProvider } from './contexts/chatProvider';
 import { VideoChatContextProvider } from './contexts/videoChatContext';
 
 import './styles/index.scss';
+import { TrackContextProvider } from './contexts/trackContext.tsx';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <I18NextProvider>
     <SocketContextProvider>
       <LoginContextProvider>
         <VideoChatContextProvider>
-          <ChatContextProvider>
-            <React.StrictMode>
-              <BrowserRouter>
-                <App />
-              </BrowserRouter>
-            </React.StrictMode>
-          </ChatContextProvider>
+          <TrackContextProvider>
+            <ChatContextProvider>
+              <React.StrictMode>
+                <BrowserRouter>
+                  <App />
+                </BrowserRouter>
+              </React.StrictMode>
+            </ChatContextProvider>
+          </TrackContextProvider>
         </VideoChatContextProvider>
       </LoginContextProvider>
     </SocketContextProvider>

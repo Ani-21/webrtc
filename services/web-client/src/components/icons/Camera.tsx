@@ -1,5 +1,5 @@
 interface CameraIcon {
-  isActive: boolean;
+  isActive: boolean | undefined;
 }
 
 export const CameraIcon = ({ isActive }: CameraIcon) => {

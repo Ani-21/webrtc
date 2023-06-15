@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { SendIcon } from '../icons/Send';
 import { CustomInput } from '../custom';
 import styles from './ChatFooter.module.scss';

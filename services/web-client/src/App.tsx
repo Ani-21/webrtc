@@ -18,10 +18,10 @@ export const App = () => {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
+      <Route path="/full" element={<LoginFull />} />
 
       <Route element={<AuthGuard />}>
         <Route index path="/room" element={<RoomPage />} />
-        <Route path="/full" element={<LoginFull />} />
       </Route>
     </Routes>
   );

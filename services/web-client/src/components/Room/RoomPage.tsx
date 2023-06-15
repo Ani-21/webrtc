@@ -3,8 +3,9 @@ import { useChatContext } from '@/contexts/chatProvider';
 import { useLoginContext } from '@/contexts/loginContext';
 import { useVideoChatContext } from '@/contexts/videoChatContext';
 import { Chat } from '../Chat/Chat';
-import styles from './Room.module.scss';
 import { VideoPage } from '../VideoPage/VideoPage';
+
+import styles from './Room.module.scss';
 
 export const RoomPage = () => {
   const { openChat } = useChatContext();

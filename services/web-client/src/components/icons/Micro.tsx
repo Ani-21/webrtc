@@ -1,10 +1,12 @@
 interface IProps {
-  isActive: boolean;
+  isActive: boolean | undefined;
+  width: number;
+  height: number;
 }
-export const MicroIcon = ({ isActive }: IProps) => {
+export const MicroIcon = ({ isActive, width, height }: IProps) => {
   if (isActive) {
     return (
-      <svg fill="none" xmlns="http://www.w3.org/2000/svg" width={34} height={34}>
+      <svg fill="none" xmlns="http://www.w3.org/2000/svg" width={width} height={height}>
         <path
           fillRule="evenodd"
           clipRule="evenodd"
@@ -20,7 +22,7 @@ export const MicroIcon = ({ isActive }: IProps) => {
   }
 
   return (
-    <svg fill="none" xmlns="http://www.w3.org/2000/svg" width={34} height={34}>
+    <svg fill="none" xmlns="http://www.w3.org/2000/svg" width={width} height={height}>
       <path
         fillRule="evenodd"
         clipRule="evenodd"

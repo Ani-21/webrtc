@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CustomButton, CustomInput, CustomPaper } from '@/components/custom';
 import { useLoginContext } from '@/contexts/loginContext';
@@ -12,7 +12,7 @@ export const Login = () => {
   const { t } = useTranslation('translation');
   const navigate = useNavigate();
 
-  const { isValidName, isFull, joinRoom, setIsLoggedIn } = useLoginContext();
+  const { isValidName, isFull, joinRoom } = useLoginContext();
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -29,7 +29,6 @@ export const Login = () => {
       if (isFull) {
         navigate('/full');
       } else {
-        setIsLoggedIn(true);
         navigate('/room');
       }
     },

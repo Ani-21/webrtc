@@ -12,6 +12,7 @@
   "dependencies": {
     "@emotion/react": "11.11.0",
     "@emotion/styled": "11.11.0",
+    "@livekit/react-components": "^1.1.0",
     "@mui/material": "5.13.3",
     "cnbuilder": "3.1.0",
     "i18next": "22.5.0",

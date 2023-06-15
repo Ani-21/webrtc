@@ -1,7 +1,6 @@
 import { createContext, useContext, useState, ReactElement, useEffect, useCallback } from 'react';
 import { useSocketContext } from './socketContext';
 import { SocketEvent, SocketError } from '../const/socketEvents';
-import { useNavigate } from 'react-router-dom';
 
 interface IUser {
   name: string;
@@ -55,7 +54,6 @@ const LoginContextProvider = ({ children }: { children: ReactElement }) => {
 
   const leaveRoom = useCallback(() => {
     emit(SocketEvent.userLogout, userData.userId);
-    setIsLoggedIn(false);
   }, [isLoggedIn]);
 
   useEffect(() => {
@@ -66,20 +64,18 @@ const LoginContextProvider = ({ children }: { children: ReactElement }) => {
         setIsFull(true);
       } else {
         const { userData: userInfo } = data;
+        setMessageHistory(data.messages);
         setUserData({
           name: userInfo.name,
           userId: userInfo.userId,
           token: userInfo.token,
         });
-        setMessageHistory(data.messages);
+        setIsLoggedIn(true);
       }
     });
 
-    subscribe(SocketEvent.userLogin, (res: boolean) => setIsLoggedIn(res));
-
     return () => {
       unsubscribe(SocketEvent.userValidateEnter);
-      unsubscribe(SocketEvent.userLogin);
     };
   }, [subscribe, unsubscribe]);
 

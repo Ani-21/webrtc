@@ -1,14 +1,19 @@
 import { MicroIcon } from '@/components/icons/Micro';
 import { useTranslation } from 'react-i18next';
 import { VideoControlButton } from '../VideoControlButton';
+import { useTrackContext } from '@/contexts/trackContext';
 
 export const AudioControl = () => {
   const { t } = useTranslation('translation');
-  const isMicActive = true;
+  const { audioEnabled, handleAudioEnabled } = useTrackContext();
 
   return (
-    <VideoControlButton tooltip={isMicActive ? `${t('microphoneOff')}` : `${t('microphoneOn')}`} color="light">
-      <MicroIcon isActive={isMicActive} />
+    <VideoControlButton
+      handleClick={handleAudioEnabled}
+      tooltip={audioEnabled ? `${t('microphoneOff')}` : `${t('microphoneOn')}`}
+      color="light"
+    >
+      <MicroIcon isActive={audioEnabled} width={34} height={34} />
     </VideoControlButton>
   );
 };

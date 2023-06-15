@@ -1,9 +1,9 @@
-import { useLoginContext } from '@/contexts/loginContext';
-import { cnb } from 'cnbuilder';
-import { formatDate } from '@/helpers/date/formatDate';
-import styles from './ChatMessage.module.scss';
-import { IMessage } from '../models/IMessage';
 import { useTranslation } from 'react-i18next';
+import { cnb } from 'cnbuilder';
+import { useLoginContext } from '@/contexts/loginContext';
+import { formatDate } from '@/helpers/date/formatDate';
+import { IMessage } from '../models/IMessage';
+import styles from './ChatMessage.module.scss';
 
 interface ChatMessageProps {
   messageData: IMessage;
