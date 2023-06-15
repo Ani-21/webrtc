@@ -12,7 +12,7 @@ export const Login = () => {
   const { t } = useTranslation('translation');
   const navigate = useNavigate();
 
-  const { isValidName, isFull, joinRoom, isLoggedIn } = useLoginContext();
+  const { isValidName, isFull, joinRoom, setIsLoggedIn } = useLoginContext();
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -22,18 +22,23 @@ export const Login = () => {
     return !isValidName ? styles.inputWarning : styles.input;
   }, [isValidName]);
 
-  const onEnterRoom = useCallback(() => {
-    joinRoom(name);
-    if (isFull) {
-      navigate('/full');
-    } else {
-      navigate('/room');
-    }
-  }, [name, isFull]);
+  const onEnterRoom = useCallback(
+    async (e: any) => {
+      e.preventDefault();
+      joinRoom(name);
+      if (isFull) {
+        navigate('/full');
+      } else {
+        setIsLoggedIn(true);
+        navigate('/room');
+      }
+    },
+    [name, isFull]
+  );
 
   return (
     <CustomPaper className={styles.container}>
-      <form className={styles.content}>
+      <form className={styles.content} onSubmit={onEnterRoom}>
         <FirstCatIcon />
         <h1 className={styles.title}>{t('input')}</h1>
         <div className={styles.inputContainer}>
@@ -51,7 +56,7 @@ export const Login = () => {
           />
           {!isValidName && <span>* {t('repeat')}</span>}
         </div>
-        <CustomButton className={styles.button} onClick={onEnterRoom} variant="contained" type="button">
+        <CustomButton className={styles.button} variant="contained" type="submit">
           {t('joinRoom')}
         </CustomButton>
       </form>

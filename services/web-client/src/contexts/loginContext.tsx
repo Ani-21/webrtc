@@ -54,7 +54,8 @@ const LoginContextProvider = ({ children }: { children: ReactElement }) => {
   }, []);
 
   const leaveRoom = useCallback(() => {
-    emit(SocketEvent.userLogout, { id: userData.userId, isLoggedIn });
+    emit(SocketEvent.userLogout, userData.userId);
+    setIsLoggedIn(false);
   }, [isLoggedIn]);
 
   useEffect(() => {
@@ -71,7 +72,6 @@ const LoginContextProvider = ({ children }: { children: ReactElement }) => {
           token: userInfo.token,
         });
         setMessageHistory(data.messages);
-        setIsLoggedIn(true);
       }
     });
 

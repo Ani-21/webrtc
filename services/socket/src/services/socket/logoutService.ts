@@ -10,6 +10,6 @@ interface IUser {
 
 export const logoutService = async (socket: Socket, user: IUser) => {
     AppState.logoutUser(user.id);
-    if (user.isLoggedIn) user.isLoggedIn = false;
+    // return users ?
     io.to(SocketRoom.room).emit(SocketUserEvent.logout, user.isLoggedIn);
 };
