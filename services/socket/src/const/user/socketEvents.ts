@@ -4,6 +4,7 @@ export enum SocketRoom {
 
 export enum SocketUserEvent {
     validateEnter = "user:validateEnter",
+    logout = "user:logout",
 }
 
 export enum SocketUserError {

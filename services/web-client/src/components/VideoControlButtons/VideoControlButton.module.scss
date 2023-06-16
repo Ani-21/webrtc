@@ -1,0 +1,54 @@
+.container {
+  position: relative;
+}
+
+.btn {
+  width: 48px;
+  height: 48px;
+  border: none;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+
+  &:hover {
+    & + .tooltip {
+      opacity: 1;
+      transition: opacity ease-in-out 75ms;
+    }
+  }
+
+  &.light {
+    &:hover {
+      background-color: var(--white-75);
+    }
+    background-color: var(--white);
+  }
+
+  &.danger {
+    &:hover {
+      background-color: var(--red-more);
+    }
+    background-color: var(--red);
+  }
+}
+
+.tooltip {
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  transform: translate(-50%, -4px);
+  padding: 0 6px;
+  display: flex;
+  background-color: var(--text-color-default);
+  color: var(--bg-default);
+  font-size: 14px;
+  white-space: nowrap;
+  border-radius: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity ease-in-out 75ms 75ms;
+  font-weight: 600;
+}

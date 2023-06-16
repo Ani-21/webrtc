@@ -5,6 +5,7 @@ interface IUser {
 
 interface IMessage {
     id: string;
+    name: string;
     userId: string;
     timestamp: Date;
     message: string;
@@ -25,6 +26,10 @@ class State {
 
     addNewUser(user: IUser) {
         this.users.push(user);
+    }
+
+    logoutUser(userId: string) {
+        this.users = this.users.filter((user: IUser) => user.id !== userId);
     }
 
     addNewMessage(msg: IMessage) {

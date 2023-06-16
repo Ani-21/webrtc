@@ -1,5 +1,5 @@
-@import "./font.scss";
-@import "./colors.scss";
+@import './font.scss';
+@import './colors.scss';
 
 :root {
   font-family: $font;
@@ -7,11 +7,19 @@
   line-height: 24px;
   font-weight: 400;
   --bg-default: #{$primary-dark};
+  --bg-gray-dark: #{$primary-gray-dark};
   --text-color-default: #{$primary-white};
   --error-color: #{$secondary-red};
   --bg-chat: #{$primary-gray-dark};
   --font-flex: #{$font-flex};
   --gray-border: #{$primary-gray};
+  --purple: #{$secondary-purple};
+  --blue: #{$primary-blue};
+  --red: #{$secondary-red};
+  --red-more: #{$secondary-red-more};
+  --white: #{$primary-white};
+  --white-75: #{$white-75};
+  --dark-50: #{$dark-50};
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;

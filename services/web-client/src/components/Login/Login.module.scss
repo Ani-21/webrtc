@@ -48,4 +48,27 @@
 
 .button {
   width: 100%;
+  text-transform: capitalize !important;
+}
+
+.buttonFull {
+  width: 100%;
+  text-transform: capitalize !important;
+  background-color: white !important;
+  color: black !important;
+}
+
+.link {
+  color: white;
+  gap: 10px;
+  text-decoration: none;
+  margin-left: 5px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 12px;
+  transition: ease-in-out 90ms;
+
+  &:hover {
+    background-color: var(--blue);
+  }
 }

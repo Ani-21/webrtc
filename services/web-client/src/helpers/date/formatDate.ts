@@ -1,3 +1,4 @@
 export const formatDate = (date: string): string => {
-  return new Date(date).getHours() + ":" + new Date(date).getMinutes();
+  const time = date.trim().split(',')[1].split(':');
+  return time[0] + ':' + time[1];
 };

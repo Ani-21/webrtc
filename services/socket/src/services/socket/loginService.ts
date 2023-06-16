@@ -1,4 +1,5 @@
 import { Socket } from "socket.io";
+import { AccessToken } from "livekit-server-sdk";
 import { io } from "../../config/socket";
 import {
     SocketUserEvent,
@@ -8,10 +9,12 @@ import {
 import { MAX_LENGTH } from "../../const/user/constants";
 import { AppState } from "../../state";
 import { IMessage } from "../../const/messages/models";
+import { vars } from "../../config/vars";
 
 interface IUser {
     name: string;
     userId: string;
+    token: string;
 }
 
 interface IData {
@@ -27,11 +30,24 @@ interface ValidData {
 export const loginService = async (socket: Socket, res: ValidData) => {
     const { name } = res;
 
+    const livekitToken = new AccessToken(vars.apiKey, vars.apiSecret, {
+        identity: socket.id,
+        name,
+    });
+
+    livekitToken.addGrant({
+        roomJoin: true,
+        room: SocketRoom.room,
+        canPublish: true,
+        canSubscribe: true,
+    });
+
     const data: IData = {
         messages: AppState.getMessages(),
         userData: {
             name,
             userId: socket.id,
+            token: livekitToken.toJwt(),
         },
         error: "",
     };

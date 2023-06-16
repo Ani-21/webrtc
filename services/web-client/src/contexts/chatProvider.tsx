@@ -1,18 +1,14 @@
-import { SocketEvent } from "@/const/socketEvents";
-import {
-  useState,
-  createContext,
-  useEffect,
-  useContext,
-  useCallback,
-} from "react";
-import { useLoginContext } from "./loginContext";
-import { useSocketContext } from "./socketContext";
-import { v4 as uuidv4 } from "uuid";
+import { SocketEvent } from '@/const/socketEvents';
+import { useState, createContext, useEffect, useContext, useCallback } from 'react';
+import { useLoginContext } from './loginContext';
+import { useSocketContext } from './socketContext';
+import { v4 as uuidv4 } from 'uuid';
 
 interface ChatContextProps {
   messages: IMessage[];
   sendMessage: (message: string, callback: VoidFunction) => void;
+  openChat: boolean;
+  setOpenChat: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface chatProviderProps {
@@ -21,6 +17,7 @@ interface chatProviderProps {
 
 interface IMessage {
   id: string;
+  name: string;
   userId: string;
   timestamp: string;
   message: string;
@@ -32,15 +29,17 @@ const ChatContextProvider = ({ children }: chatProviderProps) => {
   const [messages, setMessages] = useState<IMessage[]>([]);
   const { emit, subscribe, unsubscribe } = useSocketContext();
   const { userData, isLoggedIn, messageHistory } = useLoginContext();
+  const [openChat, setOpenChat] = useState(false);
 
   const sendMessage = useCallback(
     (message: string, callback: VoidFunction) => {
       if (message.trim().length) {
         const data: IMessage = {
           id: uuidv4(),
+          name: userData.name,
           message,
           userId: userData.userId,
-          timestamp: new Date().toLocaleString("ru"),
+          timestamp: new Date().toLocaleString('ru'),
         };
         emit(SocketEvent.sendMessage, data);
         callback();
@@ -62,15 +61,12 @@ const ChatContextProvider = ({ children }: chatProviderProps) => {
         unsubscribe(SocketEvent.recieveMessage);
       };
     }
-
   }, [subscribe, unsubscribe, isLoggedIn, updateMessages]);
 
   return (
-    <ChatContext.Provider value={{ messages, sendMessage }}>
-      {children}
-    </ChatContext.Provider>
+    <ChatContext.Provider value={{ messages, sendMessage, openChat, setOpenChat }}>{children}</ChatContext.Provider>
   );
 };
 
-const useContextChat = () => useContext(ChatContext);
-export { useContextChat, ChatContextProvider };
+const useChatContext = () => useContext(ChatContext);
+export { useChatContext, ChatContextProvider };

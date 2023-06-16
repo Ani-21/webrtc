@@ -1,0 +1,61 @@
+.container {
+  position: relative;
+  width: 100%;
+  height: 50%;
+  border-radius: 12px;
+  display: flex;
+  overflow: hidden;
+}
+
+.containerForOne {
+  height: 100%;
+}
+
+.containerMuted {
+  background-color: var(--bg-gray-dark);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border-radius: 12px;
+  gap: 10px;
+  height: 50%;
+}
+
+.containerMutedForOne {
+  height: 100%;
+}
+
+.video {
+  min-height: 100%;
+  min-width: 100%;
+  object-fit: cover;
+}
+
+.participant {
+  position: absolute;
+  gap: 10px;
+  padding: 5px 10px 5px 6px;
+  bottom: 10px;
+  left: 10px;
+  display: flex;
+  align-items: center;
+  height: 30px;
+  border-radius: 9px;
+  background-color: var(--dark-50);
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 18px;
+  font-family: var(--font-flex);
+}
+
+.participantMuted {
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 28px;
+}

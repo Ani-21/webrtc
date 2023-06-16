@@ -1,11 +1,11 @@
-import crypto from 'crypto';
+import crypto from "crypto";
 
 export const generateRandomString = (length?: number): string => {
     if (!length) {
         return crypto.randomUUID();
     }
 
-    let res = '';
+    let res = "";
     while (res.length !== length) {
         const guid = crypto.randomUUID();
         if (guid.length + res.length > length) {

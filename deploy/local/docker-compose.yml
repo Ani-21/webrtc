@@ -1,4 +1,4 @@
-version: '3.0'
+version: "3.0"
 
 services:
   web-client:
@@ -7,12 +7,27 @@ services:
       dockerfile: Dockerfile.dev
     restart: always
     ports:
-      - '3001:3001'
+      - "3001:3001"
 
   socket:
     build:
       context: ../../services/socket
       dockerfile: Dockerfile.dev
     restart: always
+    environment:
+      - LIVEKIT_API_KEY=apikey
+      - LIVEKIT_API_SECRET=apisecret
     ports:
-      - '3000:3000'
+      - "3000:3000"
+
+  livekit:
+    build:
+      context: ../../services/livekit
+      dockerfile: Dockerfile.dev
+      args:
+        - LIVEKIT_IP=127.0.0.1
+    restart: always
+    ports:
+      - "7880:7880"
+      - "7881:7881"
+      - "7882:7882/udp"
