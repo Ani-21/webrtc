@@ -1,7 +1,7 @@
 import { CameraIcon } from '@/components/icons/Camera';
 import { useTranslation } from 'react-i18next';
 import { VideoControlButton } from '../VideoControlButton';
-import { useTrackContext } from '@/contexts/trackContext';
+import { useTrackContext } from '@/contexts/localTrackContext';
 
 export const VideoControl = () => {
   const { t } = useTranslation('translation');

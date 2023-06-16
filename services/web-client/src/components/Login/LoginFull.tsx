@@ -3,6 +3,7 @@ import { CustomPaper } from '../custom/Paper';
 import { CustomButton } from '../custom/Button';
 import { FourthCatIcon } from '../icons/FourthCat';
 import { useTranslation } from 'react-i18next';
+
 import styles from './Login.module.scss';
 
 export const LoginFull = () => {

@@ -1,10 +1,11 @@
 import { useCallback, useState } from 'react';
 import { SendIcon } from '../icons/Send';
 import { CustomInput } from '../custom';
-import styles from './ChatFooter.module.scss';
 import { useChatContext } from '@/contexts/chatProvider';
 import { IconButton } from '../IconButton/IconButton';
 import { useTranslation } from 'react-i18next';
+
+import styles from './ChatFooter.module.scss';
 
 export const ChatFooter = () => {
   const [message, setMessage] = useState('');

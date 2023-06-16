@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { cnb } from 'cnbuilder';
 import { Participant } from 'livekit-client';
 import { VideoRenderer, useParticipant } from '@livekit/react-components';
 import { MicroIcon } from '../icons/Micro';
@@ -8,15 +9,20 @@ import styles from './ParticipantRenderer.module.scss';
 
 interface IProps {
   participant: Participant;
+  isTheOnly: boolean;
 }
 
-export const ParticipantRenderer = ({ participant }: IProps) => {
+export const ParticipantRenderer = ({ participant, isTheOnly }: IProps) => {
   const { cameraPublication } = useParticipant(participant);
   const { t } = useTranslation('translation');
 
   if (cameraPublication?.isMuted) {
     return (
-      <div className={styles.containerMuted}>
+      <div
+        className={cnb(styles.containerMuted, {
+          [styles.containerMutedForOne]: isTheOnly,
+        })}
+      >
         <div className={styles.participantMuted}>
           <MicroIcon width={34} height={34} isActive={participant.isMicrophoneEnabled} />
           <span>{participant.isLocal ? `${participant.name} (${t('you')})` : participant.name}</span>
@@ -26,9 +32,13 @@ export const ParticipantRenderer = ({ participant }: IProps) => {
   }
 
   return (
-    <div className={styles.container}>
+    <div
+      className={cnb(styles.container, {
+        [styles.containerForOne]: isTheOnly,
+      })}
+    >
       {cameraPublication?.isSubscribed && cameraPublication?.track && !cameraPublication?.isMuted && (
-        <VideoRenderer className={styles.container} track={cameraPublication?.track} isLocal={participant.isLocal} />
+        <VideoRenderer className={styles.video} track={cameraPublication?.track} isLocal={participant.isLocal} />
       )}
       <div className={styles.participant}>
         <MicroSmIcon isActive={participant.isMicrophoneEnabled} />

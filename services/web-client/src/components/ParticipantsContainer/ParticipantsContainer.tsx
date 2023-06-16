@@ -5,15 +5,17 @@ import { AudioRenderer } from '@livekit/react-components';
 import styles from './ParticipantsContainer.module.scss';
 
 export const ParticipantsContainer = () => {
-  const { participants, audioTracks } = useVideoChatContext();
+  const { users, audioTracks } = useVideoChatContext();
+
+  const isTheOnly = users.length === 1;
 
   return (
     <div className={styles.container}>
-      {participants?.map((participant) => (
-        <ParticipantRenderer participant={participant} />
+      {users?.map((participant) => (
+        <ParticipantRenderer key={participant.identity} participant={participant} isTheOnly={isTheOnly} />
       ))}
       {audioTracks.map((audioTrack) => (
-        <AudioRenderer isLocal={false} track={audioTrack} />
+        <AudioRenderer key={audioTrack.sid} isLocal={false} track={audioTrack} />
       ))}
     </div>
   );

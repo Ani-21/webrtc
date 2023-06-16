@@ -28,8 +28,8 @@ class State {
         this.users.push(user);
     }
 
-    logoutUser(id: string) {
-        this.users.filter((user: IUser) => user.id !== id);
+    logoutUser(userId: string) {
+        this.users = this.users.filter((user: IUser) => user.id !== userId);
     }
 
     addNewMessage(msg: IMessage) {

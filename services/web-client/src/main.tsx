@@ -7,16 +7,16 @@ import { SocketContextProvider } from './contexts/socketContext';
 import { I18NextProvider } from './contexts/i18NextProvider';
 import { ChatContextProvider } from './contexts/chatProvider';
 import { VideoChatContextProvider } from './contexts/videoChatContext';
+import { LocalTracksContextProvider } from './contexts/localTrackContext.tsx';
 
 import './styles/index.scss';
-import { TrackContextProvider } from './contexts/trackContext.tsx';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <I18NextProvider>
     <SocketContextProvider>
       <LoginContextProvider>
         <VideoChatContextProvider>
-          <TrackContextProvider>
+          <LocalTracksContextProvider>
             <ChatContextProvider>
               <React.StrictMode>
                 <BrowserRouter>
@@ -24,7 +24,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
                 </BrowserRouter>
               </React.StrictMode>
             </ChatContextProvider>
-          </TrackContextProvider>
+          </LocalTracksContextProvider>
         </VideoChatContextProvider>
       </LoginContextProvider>
     </SocketContextProvider>

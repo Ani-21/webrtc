@@ -30,12 +30,12 @@ interface ValidData {
 export const loginService = async (socket: Socket, res: ValidData) => {
     const { name } = res;
 
-    const at = new AccessToken(vars.apiKey, vars.apiSecret, {
+    const livekitToken = new AccessToken(vars.apiKey, vars.apiSecret, {
         identity: socket.id,
         name,
     });
 
-    at.addGrant({
+    livekitToken.addGrant({
         roomJoin: true,
         room: SocketRoom.room,
         canPublish: true,
@@ -47,7 +47,7 @@ export const loginService = async (socket: Socket, res: ValidData) => {
         userData: {
             name,
             userId: socket.id,
-            token: at.toJwt(),
+            token: livekitToken.toJwt(),
         },
         error: "",
     };

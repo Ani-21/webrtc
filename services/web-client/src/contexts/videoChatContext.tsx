@@ -1,13 +1,15 @@
-import { createContext, useCallback, useContext, useEffect } from 'react';
+import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { VideoPresets, Participant, RoomOptions, Room, AudioTrack } from 'livekit-client';
 import { useRoom } from '@livekit/react-core';
 import { useLoginContext } from './loginContext';
 import { publicConfig } from '@/config/publicConfig';
+import { SocketEvent } from '@/const/socketEvents';
+import { useSocketContext } from './socketContext';
 
 interface IVideoChatContextProps {
   handleConnect: () => void;
   token: string;
-  participants: Participant[];
+  users: Participant[];
   room: Room | undefined;
   audioTracks: AudioTrack[];
 }
@@ -20,6 +22,8 @@ const VideoChatContext = createContext({} as IVideoChatContextProps);
 
 const VideoChatContextProvider = ({ children }: IProps) => {
   const { userData } = useLoginContext();
+  const { subscribe, unsubscribe } = useSocketContext();
+  const { setIsFull } = useLoginContext();
 
   const roomOptions: RoomOptions = {
     dynacast: true,
@@ -32,6 +36,7 @@ const VideoChatContextProvider = ({ children }: IProps) => {
     },
   };
   const { connect, room, participants, audioTracks } = useRoom(roomOptions);
+  const [users, setUsers] = useState<Participant[]>([]);
 
   const token = userData.token;
 
@@ -40,7 +45,7 @@ const VideoChatContextProvider = ({ children }: IProps) => {
       await connect(publicConfig.livekitUrl, token);
       await room?.localParticipant.enableCameraAndMicrophone();
     } catch (err) {
-      console.log(err);
+      throw new Error('Something went wrong', { cause: err });
     }
   }, [token]);
 
@@ -48,8 +53,26 @@ const VideoChatContextProvider = ({ children }: IProps) => {
     handleConnect();
   }, []);
 
+  useEffect(() => {
+    if (participants) {
+      setUsers(participants);
+    }
+
+    if (participants.length > 4) {
+      setIsFull(true);
+    }
+
+    subscribe(SocketEvent.userLogout, (userId: string) => {
+      setIsFull(false);
+      const remainedUsers = users.filter((participant) => participant.identity !== userId);
+      setUsers(remainedUsers);
+    });
+
+    return () => unsubscribe(SocketEvent.userLogout);
+  }, [participants, users, subscribe, unsubscribe]);
+
   return (
-    <VideoChatContext.Provider value={{ handleConnect, token, participants, room, audioTracks }}>
+    <VideoChatContext.Provider value={{ handleConnect, token, users, room, audioTracks }}>
       {children}
     </VideoChatContext.Provider>
   );

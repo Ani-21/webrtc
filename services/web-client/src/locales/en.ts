@@ -13,5 +13,8 @@ export const en = {
     videoOff: 'Turn off camera',
     videoOn: 'Turn on camera',
     endCall: 'End call',
+    notLoggedIn: 'You are not logged in',
+    go: 'Go to',
+    login: 'login',
   },
 };

@@ -50,10 +50,6 @@ export class Router {
     subscribe(socket: Socket, { path }: { path?: string } = {}) {
         this.routes.map((r) => {
             const p = path?.length ? `${path}:${r.path}` : r.path;
-            // todo
-            // const isDisconnect = p.endsWith(':disconnect');
-            // const routePath = isDisconnect ? 'disconnect' : p;
-            // socket.on(routePath, async (data: any, cb: ICbFn = emptyFunction) => {
             socket.on(p, async (data: any, cb: ICbFn = emptyFunction) => {
                 try {
                     let res;

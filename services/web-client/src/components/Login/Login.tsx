@@ -1,18 +1,19 @@
+import { useNavigate } from 'react-router-dom';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CustomButton, CustomInput, CustomPaper } from '@/components/custom';
 import { useLoginContext } from '@/contexts/loginContext';
 import { FirstCatIcon } from '@/components/icons/FirstCat';
 import { CustomInputTypes } from '@/const/customInputTypes';
+
 import styles from './Login.module.scss';
-import { useNavigate } from 'react-router-dom';
 
 export const Login = () => {
   const [name, setName] = useState('');
   const { t } = useTranslation('translation');
   const navigate = useNavigate();
 
-  const { isValidName, isFull, joinRoom } = useLoginContext();
+  const { isValidName, joinRoom } = useLoginContext();
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -26,13 +27,18 @@ export const Login = () => {
     async (e: any) => {
       e.preventDefault();
       joinRoom(name);
-      if (isFull) {
-        navigate('/full');
-      } else {
-        navigate('/room');
+      navigate('/room');
+    },
+    [name]
+  );
+
+  const handleKeyDown = useCallback(
+    (e: any) => {
+      if (e.key === 'Enter') {
+        onEnterRoom(e);
       }
     },
-    [name, isFull]
+    [name]
   );
 
   return (
@@ -52,6 +58,7 @@ export const Login = () => {
             value={name}
             name="name"
             onChange={handleChange}
+            onKeyDown={handleKeyDown}
           />
           {!isValidName && <span>* {t('repeat')}</span>}
         </div>

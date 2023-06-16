@@ -21,6 +21,7 @@ interface ILoginContext {
   isFull: boolean;
   isLoggedIn: boolean;
   setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsFull: React.Dispatch<React.SetStateAction<boolean>>;
   joinRoom: (name: string) => void;
   leaveRoom: () => void;
   messageHistory: IMessage[];
@@ -54,7 +55,7 @@ const LoginContextProvider = ({ children }: { children: ReactElement }) => {
 
   const leaveRoom = useCallback(() => {
     emit(SocketEvent.userLogout, userData.userId);
-  }, [isLoggedIn]);
+  }, [userData.userId]);
 
   useEffect(() => {
     subscribe(SocketEvent.userValidateEnter, (data: IData) => {
@@ -90,6 +91,7 @@ const LoginContextProvider = ({ children }: { children: ReactElement }) => {
         joinRoom,
         leaveRoom,
         messageHistory,
+        setIsFull,
       }}
     >
       {children}

@@ -1,5 +1,6 @@
-import { cnb } from 'cnbuilder';
 import React from 'react';
+import { cnb } from 'cnbuilder';
+
 import styles from './VideoControlButton.module.scss';
 
 interface IProps {

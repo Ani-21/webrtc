@@ -1,7 +1,7 @@
 import { MicroIcon } from '@/components/icons/Micro';
 import { useTranslation } from 'react-i18next';
 import { VideoControlButton } from '../VideoControlButton';
-import { useTrackContext } from '@/contexts/trackContext';
+import { useTrackContext } from '@/contexts/localTrackContext';
 
 export const AudioControl = () => {
   const { t } = useTranslation('translation');
