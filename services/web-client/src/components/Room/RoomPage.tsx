@@ -12,7 +12,9 @@ import styles from './Room.module.scss';
 export const RoomPage = () => {
   const { openChat } = useChatContext();
   const { handleConnect } = useVideoChatContext();
-  const { userData, isFull } = useLoginContext();
+  const { userData, isFull, isLoggedIn } = useLoginContext();
+
+  console.log(isLoggedIn);
 
   useEffect(() => {
     if (userData.token) {
