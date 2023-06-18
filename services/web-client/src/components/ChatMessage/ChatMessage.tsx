@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { cnb } from 'cnbuilder';
 import { useLoginContext } from '@/contexts/loginContext';
 import { formatDate } from '@/helpers/date/formatDate';
-import { IMessage } from '../models/IMessage';
+import { IMessage } from '../../models';
 
 import styles from './ChatMessage.module.scss';
 

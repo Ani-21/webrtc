@@ -20,7 +20,7 @@ export const CustomInput = styled(Input)(({ myHeight, isFocused, myColor }: Cust
     border: isFocused ? '1px solid #2C68FA' : 'none',
   },
   '&:hover': {
-    border: '1px solid rgba(255, 255, 255, 0.25)',
+    border: isFocused ? '1px solid #2C68FA' : '1px solid rgba(255, 255, 255, 0.25)',
     cursor: 'pointer',
   },
   '.MuiInputBase-input': {

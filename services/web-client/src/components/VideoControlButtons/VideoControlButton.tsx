@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { cnb } from 'cnbuilder';
 
 import styles from './VideoControlButton.module.scss';
@@ -10,7 +10,7 @@ interface IProps {
   handleClick?: () => void;
 }
 
-export const VideoControlButton = ({ children, tooltip, color, handleClick }: IProps) => {
+export const VideoControlButton = memo(({ children, tooltip, color, handleClick }: IProps) => {
   return (
     <div className={styles.container}>
       <button
@@ -22,4 +22,4 @@ export const VideoControlButton = ({ children, tooltip, color, handleClick }: IP
       {tooltip && <span className={styles.tooltip}>{tooltip}</span>}
     </div>
   );
-};
+});

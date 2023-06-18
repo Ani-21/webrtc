@@ -5,7 +5,7 @@ import { ChatFooter } from '../ChatFooter/ChatFooter';
 import { ChatMessage } from '../ChatMessage/ChatMessage';
 import { useTranslation } from 'react-i18next';
 import { IconButton } from '../IconButton/IconButton';
-import { IMessage } from '../models/IMessage';
+import { IMessage } from '../../models';
 
 import styles from './Chat.module.scss';
 

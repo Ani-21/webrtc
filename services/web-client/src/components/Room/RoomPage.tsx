@@ -14,11 +14,10 @@ export const RoomPage = () => {
   const { handleConnect } = useVideoChatContext();
   const { userData, isFull, isLoggedIn } = useLoginContext();
 
-  console.log(isLoggedIn);
-
   useEffect(() => {
     if (userData.token) {
       handleConnect();
+      console.log('ROOM PAGE:check token', userData.token);
     }
   }, [userData.token]);
 

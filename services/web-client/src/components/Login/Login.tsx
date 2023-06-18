@@ -13,7 +13,7 @@ export const Login = () => {
   const { t } = useTranslation('translation');
   const navigate = useNavigate();
 
-  const { isValidName, joinRoom } = useLoginContext();
+  const { isValidName, joinRoom, isLoggedIn } = useLoginContext();
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -29,7 +29,7 @@ export const Login = () => {
       joinRoom(name);
       navigate('/room');
     },
-    [name]
+    [name, joinRoom, navigate]
   );
 
   const handleKeyDown = useCallback(
@@ -38,7 +38,7 @@ export const Login = () => {
         onEnterRoom(e);
       }
     },
-    [name]
+    [onEnterRoom]
   );
 
   return (

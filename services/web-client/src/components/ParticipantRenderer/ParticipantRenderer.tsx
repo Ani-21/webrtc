@@ -6,13 +6,14 @@ import { MicroIcon } from '../icons/Micro';
 import { MicroSmIcon } from '../icons/MicroSm';
 
 import styles from './ParticipantRenderer.module.scss';
+import { memo } from 'react';
 
 interface IProps {
   participant: Participant;
   isTheOnly: boolean;
 }
 
-export const ParticipantRenderer = ({ participant, isTheOnly }: IProps) => {
+export const ParticipantRenderer = memo(({ participant, isTheOnly }: IProps) => {
   const { cameraPublication } = useParticipant(participant);
   const { t } = useTranslation('translation');
 
@@ -46,4 +47,4 @@ export const ParticipantRenderer = ({ participant, isTheOnly }: IProps) => {
       </div>
     </div>
   );
-};
+});

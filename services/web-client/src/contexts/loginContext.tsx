@@ -1,19 +1,7 @@
 import { createContext, useContext, useState, ReactElement, useEffect, useCallback } from 'react';
 import { useSocketContext } from './socketContext';
 import { SocketEvent, SocketError } from '../const/socketEvents';
-
-interface IUser {
-  name: string;
-  userId: string;
-  token: string;
-}
-
-interface IData {
-  messages: IMessage[];
-  userData: IUser;
-  token: string;
-  error?: string;
-}
+import { IData, IMessage, IUser } from '@/models';
 
 interface ILoginContext {
   userData: IUser;
@@ -27,14 +15,6 @@ interface ILoginContext {
   messageHistory: IMessage[];
 }
 
-interface IMessage {
-  id: string;
-  name: string;
-  userId: string;
-  timestamp: string;
-  message: string;
-}
-
 const LoginContext = createContext({} as ILoginContext);
 
 const LoginContextProvider = ({ children }: { children: ReactElement }) => {
@@ -43,19 +23,23 @@ const LoginContextProvider = ({ children }: { children: ReactElement }) => {
     userId: '',
     token: '',
   });
+
   const [messageHistory, setMessageHistory] = useState<IMessage[]>([]);
   const [isValidName, setIsValidName] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isFull, setIsFull] = useState(false);
   const { emit, subscribe, unsubscribe } = useSocketContext();
 
-  const joinRoom = useCallback((name: string) => {
-    emit(SocketEvent.userLogin, { name });
-  }, []);
+  const joinRoom = useCallback(
+    (name: string) => {
+      emit(SocketEvent.userLogin, { name });
+    },
+    [emit]
+  );
 
   const leaveRoom = useCallback(() => {
     emit(SocketEvent.userLogout, userData.userId);
-  }, [userData.userId]);
+  }, [userData.userId, emit]);
 
   useEffect(() => {
     subscribe(SocketEvent.userValidateEnter, (data: IData) => {

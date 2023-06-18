@@ -3,6 +3,7 @@ import { useState, createContext, useEffect, useContext, useCallback } from 'rea
 import { useLoginContext } from './loginContext';
 import { useSocketContext } from './socketContext';
 import { v4 as uuidv4 } from 'uuid';
+import { IMessage } from '@/models';
 
 interface ChatContextProps {
   messages: IMessage[];
@@ -13,14 +14,6 @@ interface ChatContextProps {
 
 interface chatProviderProps {
   children: React.ReactElement;
-}
-
-interface IMessage {
-  id: string;
-  name: string;
-  userId: string;
-  timestamp: string;
-  message: string;
 }
 
 const ChatContext = createContext({} as ChatContextProps);

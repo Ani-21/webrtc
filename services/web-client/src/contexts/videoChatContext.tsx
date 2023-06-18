@@ -3,13 +3,14 @@ import { VideoPresets, Participant, RoomOptions, Room, AudioTrack } from 'liveki
 import { useRoom } from '@livekit/react-core';
 import { useLoginContext } from './loginContext';
 import { publicConfig } from '@/config/publicConfig';
-import { SocketEvent } from '@/const/socketEvents';
+import { SocketError, SocketEvent } from '@/const/socketEvents';
 import { useSocketContext } from './socketContext';
+import { IData } from '@/models';
 
 interface IVideoChatContextProps {
   handleConnect: () => void;
   token: string;
-  users: Participant[];
+  participants: Participant[];
   room: Room | undefined;
   audioTracks: AudioTrack[];
 }
@@ -44,23 +45,22 @@ const VideoChatContextProvider = ({ children }: IProps) => {
     try {
       await connect(publicConfig.livekitUrl, token);
       await room?.localParticipant.enableCameraAndMicrophone();
-    } catch (err) {
+      console.log('LOCAL PART:video context', room?.localParticipant);
+    } catch (err: any) {
       throw new Error('Something went wrong', { cause: err });
     }
-  }, [token]);
-
-  useEffect(() => {
-    handleConnect();
-  }, []);
+  }, [token, room?.localParticipant, connect]);
 
   useEffect(() => {
     if (participants) {
       setUsers(participants);
     }
 
-    if (participants.length > 4) {
-      setIsFull(true);
-    }
+    subscribe(SocketEvent.userValidateEnter, (data: IData) => {
+      if (data.error === SocketError.userFullRoomError) {
+        setIsFull(true);
+      }
+    });
 
     subscribe(SocketEvent.userLogout, (userId: string) => {
       setIsFull(false);
@@ -68,11 +68,13 @@ const VideoChatContextProvider = ({ children }: IProps) => {
       setUsers(remainedUsers);
     });
 
-    return () => unsubscribe(SocketEvent.userLogout);
+    return () => {
+      unsubscribe(SocketEvent.userLogout), unsubscribe(SocketEvent.userValidateEnter);
+    };
   }, [participants, users, subscribe, unsubscribe]);
 
   return (
-    <VideoChatContext.Provider value={{ handleConnect, token, users, room, audioTracks }}>
+    <VideoChatContext.Provider value={{ handleConnect, token, participants, room, audioTracks }}>
       {children}
     </VideoChatContext.Provider>
   );
