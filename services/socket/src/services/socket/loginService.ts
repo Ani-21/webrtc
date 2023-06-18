@@ -62,6 +62,7 @@ export const loginService = async (socket: Socket, res: ValidData) => {
         if (name.length) {
             userData.name = name;
             AppState.addNewUser({ id: userData.userId, name });
+            console.log(userData);
             socket.join(SocketRoom.room);
             io.to(userData.userId).emit(SocketUserEvent.validateEnter, data);
         } else {

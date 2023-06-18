@@ -17,9 +17,8 @@ export const RoomPage = () => {
   useEffect(() => {
     if (userData.token) {
       handleConnect();
-      console.log('ROOM PAGE:check token', userData.token);
     }
-  }, [userData.token]);
+  }, [userData.token, handleConnect]);
 
   if (!userData.token && !isFull) {
     return <NoLogin />;

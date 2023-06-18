@@ -10,7 +10,7 @@ import { IData } from '@/models';
 interface IVideoChatContextProps {
   handleConnect: () => void;
   token: string;
-  participants: Participant[];
+  users: Participant[];
   room: Room | undefined;
   audioTracks: AudioTrack[];
 }
@@ -45,11 +45,10 @@ const VideoChatContextProvider = ({ children }: IProps) => {
     try {
       await connect(publicConfig.livekitUrl, token);
       await room?.localParticipant.enableCameraAndMicrophone();
-      console.log('LOCAL PART:video context', room?.localParticipant);
     } catch (err: any) {
       throw new Error('Something went wrong', { cause: err });
     }
-  }, [token, room?.localParticipant, connect]);
+  }, [token, connect, room]);
 
   useEffect(() => {
     if (participants) {
@@ -74,7 +73,7 @@ const VideoChatContextProvider = ({ children }: IProps) => {
   }, [participants, users, subscribe, unsubscribe]);
 
   return (
-    <VideoChatContext.Provider value={{ handleConnect, token, participants, room, audioTracks }}>
+    <VideoChatContext.Provider value={{ handleConnect, token, users, room, audioTracks }}>
       {children}
     </VideoChatContext.Provider>
   );
