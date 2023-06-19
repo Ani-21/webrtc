@@ -17,6 +17,8 @@ const LocalTracksContextProvider = ({ children }: { children: React.ReactElement
   const [audioEnabled, setAudioEnabled] = useState(true);
   const [videoEnabled, setVideoEnabled] = useState(true);
 
+  const localUser = room?.localParticipant;
+
   const { token } = userData;
 
   const handleAudioEnabled = useCallback(async () => {
@@ -29,15 +31,15 @@ const LocalTracksContextProvider = ({ children }: { children: React.ReactElement
 
   useEffect(() => {
     if (token) {
-      room?.localParticipant.setMicrophoneEnabled(audioEnabled);
+      localUser?.setMicrophoneEnabled(audioEnabled);
     }
-  }, [token, audioEnabled, room?.localParticipant]);
+  }, [token, audioEnabled, localUser]);
 
   useEffect(() => {
     if (token) {
-      room?.localParticipant.setCameraEnabled(videoEnabled);
+      localUser?.setCameraEnabled(videoEnabled);
     }
-  }, [token, videoEnabled, room?.localParticipant]);
+  }, [token, videoEnabled, localUser]);
 
   return (
     <LocalTrackContext.Provider

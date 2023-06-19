@@ -18,7 +18,7 @@ export const RoomPage = () => {
     if (userData.token) {
       handleConnect();
     }
-  }, [userData.token, handleConnect]);
+  }, [userData.token]);
 
   if (!userData.token && !isFull) {
     return <NoLogin />;

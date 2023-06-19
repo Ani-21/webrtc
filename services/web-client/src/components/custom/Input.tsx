@@ -1,15 +1,15 @@
 import { Input, styled } from '@mui/material';
 
 interface CustomInputProps {
-  myHeight: 'big' | 'small';
-  isFocused?: 'true';
+  myheight: 'big' | 'small';
+  isfocused?: 'true';
   myColor?: 'dark';
 }
 
-export const CustomInput = styled(Input)(({ myHeight, isFocused, myColor }: CustomInputProps) => ({
+export const CustomInput = styled(Input)(({ myheight, isfocused, myColor }: CustomInputProps) => ({
   backgroundColor: myColor === 'dark' ? '#181b1d' : '#2A2E30',
   borderRadius: '11px',
-  height: myHeight === 'big' ? '52px' : '50px',
+  height: myheight === 'big' ? '52px' : '50px',
   padding: '14px 12px',
   fontWeight: '300',
   fontSize: '16px',
@@ -17,10 +17,10 @@ export const CustomInput = styled(Input)(({ myHeight, isFocused, myColor }: Cust
   caretColor: '#2C68FA',
   width: '100%',
   '&.Mui-focused': {
-    border: isFocused ? '1px solid #2C68FA' : 'none',
+    border: isfocused ? '1px solid #2C68FA' : 'none',
   },
   '&:hover': {
-    border: isFocused ? '1px solid #2C68FA' : '1px solid rgba(255, 255, 255, 0.25)',
+    border: isfocused ? '1px solid #2C68FA' : '1px solid rgba(255, 255, 255, 0.25)',
     cursor: 'pointer',
   },
   '.MuiInputBase-input': {

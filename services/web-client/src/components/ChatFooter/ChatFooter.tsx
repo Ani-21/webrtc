@@ -30,7 +30,7 @@ export const ChatFooter = () => {
   return (
     <div className={styles.inputContainer}>
       <CustomInput
-        myHeight="small"
+        myheight="small"
         myColor="dark"
         disableUnderline
         endAdornment={

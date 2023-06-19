@@ -49,8 +49,8 @@ export const Login = () => {
         <div className={styles.inputContainer}>
           <CustomInput
             className={warningStyle}
-            myHeight="big"
-            isFocused="true"
+            myheight="big"
+            isfocused="true"
             type={CustomInputTypes.text}
             placeholder="Name"
             disableUnderline
