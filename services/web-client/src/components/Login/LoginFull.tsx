@@ -10,7 +10,10 @@ export const LoginFull = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  const onLeave = () => navigate('/');
+  const onLeave = () => {
+    navigate('/');
+    window.location.reload();
+  };
 
   return (
     <CustomPaper className={styles.container}>

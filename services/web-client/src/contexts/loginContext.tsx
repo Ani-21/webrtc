@@ -2,6 +2,8 @@ import { createContext, useContext, useState, ReactElement, useEffect, useCallba
 import { useSocketContext } from './socketContext';
 import { SocketEvent, SocketError } from '../const/socketEvents';
 import { IData, IMessage, IUser } from '@/models';
+import { useVideoChatContext } from './videoChatContext';
+import { useRoom } from '@livekit/react-components';
 
 interface ILoginContext {
   userData: IUser;
@@ -23,12 +25,15 @@ const LoginContextProvider = ({ children }: { children: ReactElement }) => {
     userId: '',
     token: '',
   });
-
   const [messageHistory, setMessageHistory] = useState<IMessage[]>([]);
   const [isValidName, setIsValidName] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isFull, setIsFull] = useState(false);
   const { emit, subscribe, unsubscribe } = useSocketContext();
+  const { setUsers } = useVideoChatContext();
+  const { participants } = useRoom();
+
+  console.log('LOGIN CONTEXT', isLoggedIn);
 
   const joinRoom = useCallback(
     (name: string) => {
@@ -39,6 +44,7 @@ const LoginContextProvider = ({ children }: { children: ReactElement }) => {
 
   const leaveRoom = useCallback(() => {
     emit(SocketEvent.userLogout, userData.userId);
+    console.log('USER LEFT', userData.userId);
   }, [userData.userId, emit]);
 
   useEffect(() => {
@@ -56,6 +62,7 @@ const LoginContextProvider = ({ children }: { children: ReactElement }) => {
           token: userInfo.token,
         });
         setIsLoggedIn(true);
+        setUsers(participants);
       }
     });
 

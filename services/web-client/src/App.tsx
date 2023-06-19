@@ -4,9 +4,13 @@ import { Login } from './components/Login/Login';
 import { LoginFull } from './components/Login/LoginFull';
 import { RoomPage } from './components/Room/RoomPage';
 import { useSocketContext } from './contexts/socketContext';
+import { useLoginContext } from './contexts/loginContext';
 
 export const App = () => {
   const { connect, disconnect } = useSocketContext();
+  const { isLoggedIn } = useLoginContext();
+
+  console.log('APP COMPONENT:', isLoggedIn);
 
   useEffect(() => {
     connect();

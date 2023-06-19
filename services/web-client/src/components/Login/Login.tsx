@@ -15,6 +15,8 @@ export const Login = () => {
 
   const { isValidName, joinRoom, isLoggedIn } = useLoginContext();
 
+  console.log('LOGIN COMPONENT:', isLoggedIn);
+
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   }, []);
@@ -28,6 +30,7 @@ export const Login = () => {
       e.preventDefault();
       joinRoom(name);
       navigate('/room');
+      console.log('CLICK INSIDE ONENTER ROOM:', isLoggedIn);
     },
     [name, joinRoom, navigate]
   );

@@ -13,6 +13,7 @@ interface IVideoChatContextProps {
   users: Participant[];
   room: Room | undefined;
   audioTracks: AudioTrack[];
+  setUsers: React.Dispatch<React.SetStateAction<Participant[]>>;
 }
 
 interface IProps {
@@ -63,17 +64,21 @@ const VideoChatContextProvider = ({ children }: IProps) => {
 
     subscribe(SocketEvent.userLogout, (userId: string) => {
       setIsFull(false);
+      console.log('users in room', users);
       const remainedUsers = users.filter((participant) => participant.identity !== userId);
+      console.log('filter', remainedUsers);
       setUsers(remainedUsers);
     });
 
     return () => {
       unsubscribe(SocketEvent.userLogout), unsubscribe(SocketEvent.userValidateEnter);
+
+      console.log(' USERS', users);
     };
   }, [participants, users, subscribe, unsubscribe]);
 
   return (
-    <VideoChatContext.Provider value={{ handleConnect, token, users, room, audioTracks }}>
+    <VideoChatContext.Provider value={{ handleConnect, token, users, setUsers, room, audioTracks }}>
       {children}
     </VideoChatContext.Provider>
   );

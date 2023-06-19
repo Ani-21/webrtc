@@ -15,6 +15,7 @@ export const EndCallControl = () => {
     leaveRoom();
     setIsLoggedIn(false);
     navigate('/');
+    window.location.reload();
     room?.disconnect();
   };
 
